@@ -1,10 +1,12 @@
 package org.melato.gpx.util;
 
+import java.util.AbstractList;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
 import org.melato.gpx.Earth;
+import org.melato.gpx.Point;
 import org.melato.gpx.Waypoint;
 
 /**
@@ -24,7 +26,7 @@ public class ProximityFinder {
    * For each point in the sequence, maintain the path of the sequence up to that point.
    * This way we can easily compute path differences between two points.
    */
-  private static class SequencePoint {
+  static class SequencePoint {
     Waypoint point;
     float   distance;
     public SequencePoint(Waypoint point, float distance) {
@@ -77,6 +79,23 @@ public class ProximityFinder {
     return points.length;
   }
 
+  /**
+   * Return the list of waypoints (not the original list, but an equivalent one).
+   * @return
+   */
+  List<Waypoint> waypoints() {
+    return new AbstractList<Waypoint>() {
+      @Override
+      public int size() {
+        return points.length;
+      }
+      
+      @Override
+      public Waypoint get(int index) {
+        return points[index].point;
+      }      
+    };
+  }
   /**
    * Determine if the query waypoint q, is near the subsequence between indexes i1, i2 (inclusive).
    * It uses binary search and recursion to split the susbsequence in two, etc. 
@@ -189,7 +208,7 @@ public class ProximityFinder {
    * @param index
    * @return
    */
-  private Segment findNearbySegment(Waypoint q, int index) {
+  private Segment findNearbySegment(Point q, int index) {
     Segment s = new Segment();
     float minDistance = Earth.distance(q, points[index].point);
     if ( minDistance > target )
@@ -231,7 +250,7 @@ public class ProximityFinder {
    * @param segment  Determines the bounds of the segment to search. 
    * @param nearby The output indexes for the local minima found.
    */
-  private void findNearby(Waypoint q, Segment segment, Collection<Integer> nearby) {
+  private void findNearby(Point q, Segment segment, Collection<Integer> nearby) {
     //System.out.println( "findNearby " + segment );
     if ( segment.isEmpty() )
       return;
@@ -317,7 +336,7 @@ public class ProximityFinder {
    * @param q  The waypoint to query.
    * @param nearby An output collection of indexes.
    */
-  public void findNearby( Waypoint q, Collection<Integer> nearby ) {
+  public void findNearby( Point q, Collection<Integer> nearby ) {
     findNearby(q, new Segment(0, points.length - 1), nearby );
   }
   
@@ -326,9 +345,32 @@ public class ProximityFinder {
    * @param q
    * @return A list of the indexes of the found points.
    */
-  public List<Integer> findNearbyIndexes( Waypoint q ) {
+  public List<Integer> findNearbyIndexes( Point q ) {
     List<Integer> nearby = new ArrayList<Integer>();
     findNearby(q, new Segment(0, points.length - 1), nearby );
     return nearby;
-  }  
+  }
+  
+  /**
+   * Find the closest point of S that has distance from q within the target distance.
+   * @param q
+   * @return The index of such point, or -1
+   */
+  public int findClosestNearby( Point q ) {
+    List<Integer> nearby = findNearbyIndexes(q);
+    int count = nearby.size();
+    if ( count < 0 )
+      return -1;
+    float minDistance = 0;
+    int minIndex = -1;
+    for( int i = 0; i < count; i++ ) {
+      int index = nearby.get(i);
+      float d = Earth.distance(q, points[index].point );
+      if ( i == 0 || d < minDistance ) {
+        minDistance = d;
+        minIndex = index;
+      }
+    }
+    return minIndex;
+  }    
 }
