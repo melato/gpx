@@ -78,4 +78,9 @@ public class Point {
 		return new Float(lat).hashCode() + new Float(lon).hashCode();		
 	}
 	
+	@Override
+  public String toString() {
+    return lat + ";" + lon;
+  }
+		
 }
