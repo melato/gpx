@@ -26,20 +26,9 @@ public class Earth {
 		return (float) (CIRCUMFERENCE * d / (2 * Math.PI));
 	}
 	
-	/**
-	 * Compute the speed between two GPS measurements, in metric units (m/s).
-	 * @return
-	 */
-	public static float speed( Point p1, Point p2 ) {
-		float time = Point.timeDifference(p1, p2);
-		if ( time == 0 )
-			return 0;
-		return (float) (distance(p1, p2) / time );
-	}
-	
   /**
    * Compute the  bearing between two points in degrees.  Does not use elevation.
-   * @return a number between +180 and -180 degrees.
+   * @return
    */
   public static float bearing( Point p1, Point p2 ) {
     double lat1 = Math.toRadians(p1.lat);
@@ -51,6 +40,17 @@ public class Earth {
     return (float) Math.toDegrees(t);
   }
   
+	/**
+	 * Compute the speed between two GPS measurements, in metric units (m/s).
+	 * @return
+	 */
+	public static float speed( Point p1, Point p2 ) {
+		float time = Point.timeDifference(p1, p2);
+		if ( time == 0 )
+			return 0;
+		return (float) (distance(p1, p2) / time );
+	}
+	
 	
 	
 }
