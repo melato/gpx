@@ -44,6 +44,9 @@ public class GPXWriter {
     write( xml, GPX.SYM, p.getSym() );
 		if ( p.getTime() != null )
 		  write( xml, GPX.TIME, formatDate(p.getTime()));
+		for( String link: p.getLinks() ) {
+		  write( xml, GPX.LINK, link );
+		}
 		xml.tagEnd(element);
 		xml.println();
 	}
