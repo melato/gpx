@@ -63,6 +63,8 @@ public class ProximityFinderTest {
     Assert.assertEquals(1, nearby.size());
     int index = nearby.get(0);
     Assert.assertEquals( offset, index );
+    int closest = f.findClosestNearby(query);
+    Assert.assertEquals(offset, closest);
   }
   
 }
