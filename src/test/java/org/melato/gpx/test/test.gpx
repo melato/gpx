@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<gpx version="1.1"
+     creator="org.melato"
+     xmlns="http://www.topografix.com/GPX/1/1"
+     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+     xsi:schemaLocation="http://www.topografix.com/GPX/1/1 http://www.topografix.com/GPX/1/1/gpx.xsd">
+     
+  <wpt lat="1.1" lon="2.1">
+         <name>P1</name>
+         <desc>Waypoint One</desc>
+         <type>link1</type>
+         <link>link1</link>
+  </wpt>
+     
+   <rte>
+      <name>Route1</name>
+      <rtept lat="10.1" lon="20.1">
+      </rtept>
+      <rtept lat="10.2" lon="20.2">
+      </rtept>
+      <rtept lat="10.3" lon="20.3">
+      </rtept>
+   </rte>
+
+   <rte>
+      <name>Route2</name>
+      <rtept lat="20.1" lon="20.1">
+      </rtept>
+   </rte>
+   
+   <trk>
+      <name>Track1</name>
+      <trkseg>
+      <trkpt lat="30.1" lon="3.1"/>
+      </trkseg>
+   </trk>
+   
+</gpx>

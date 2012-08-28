@@ -1,0 +1,33 @@
+<?xml version='1.0' encoding='UTF-8' standalone='yes' ?>
+<gpx version="1.1" creator="nl.sogeti.android.gpstracker" xsi:schemaLocation="http://www.topografix.com/GPX/1/1 http://www.topografix.com/gpx/1/1/gpx.xsd" xmlns="http://www.topografix.com/GPX/1/1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:gpx10="http://www.topografix.com/GPX/1/0" xmlns:ogt10="http://gpstracker.android.sogeti.nl/GPX/1/0">
+<metadata>
+<time>2012-03-20T18:21:09Z</time>
+</metadata>
+<trk>
+<name>Rafina</name>
+<trkseg>
+<trkpt lat="37.9920534" lon="23.79745113">
+<ele>275.7</ele>
+<time>2012-03-20T18:22:53Z</time>
+<extensions>
+<ogt10:accuracy>16.0</ogt10:accuracy></extensions>
+</trkpt>
+<trkpt lat="37.99211496" lon="23.79788987">
+<ele>273.9</ele>
+<time>2012-03-20T18:23:22Z</time>
+<extensions>
+<gpx10:speed>4.300000190734863</gpx10:speed>
+<ogt10:accuracy>16.0</ogt10:accuracy>
+<gpx10:course>79.0999984741211</gpx10:course></extensions>
+</trkpt>
+<trkpt lat="37.99211982" lon="23.79805004">
+<ele>264.6</ele>
+<time>2012-03-20T18:23:24Z</time>
+<extensions>
+<gpx10:speed>6.0</gpx10:speed>
+<ogt10:accuracy>12.0</ogt10:accuracy>
+<gpx10:course>75.90</gpx10:course></extensions>
+</trkpt>
+</trkseg>
+</trk>
+</gpx>
