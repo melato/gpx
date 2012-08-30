@@ -1,6 +1,7 @@
 package org.melato.gpx;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.melato.xml.XMLMappingHandler;
@@ -23,7 +24,8 @@ class RouteHandler extends XMLMappingHandler {
 	public void end() throws SAXException {
 		Route route = new Route();
 		route.name = nameHandler.getText();
-		route.path = new Sequence(waypoints);
+		Waypoint[] array = waypoints.toArray( new Waypoint[0]);
+		route.path = new Sequence(Arrays.asList(array));
 		waypoints.clear();
 		routes.add(route);
 		

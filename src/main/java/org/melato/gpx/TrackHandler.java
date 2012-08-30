@@ -1,6 +1,7 @@
 package org.melato.gpx;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.melato.xml.XMLMappingHandler;
@@ -31,7 +32,8 @@ class TrackHandler extends XMLMappingHandler {
 		}
 		@Override
 		public void end() throws SAXException {
-			paths.add( new Sequence(waypoints));
+	    Waypoint[] array = waypoints.toArray( new Waypoint[0]);
+			paths.add( new Sequence(Arrays.asList(array)));
 			waypoints.clear();
 		}		
 	}
