@@ -10,7 +10,8 @@ import org.xml.sax.SAXException;
 
 class TrackHandler extends XMLMappingHandler {
 	private XMLStringHandler nameHandler = new XMLStringHandler();
-	private	List<Track> tracks = new ArrayList<Track>();
+	private List<Track> tracks = new ArrayList<Track>();
+	private List<Waypoint> waypoints = new ArrayList<Waypoint>();
 	SegmentHandler segHandler = new SegmentHandler();
 
 	public TrackHandler() {
@@ -19,7 +20,7 @@ class TrackHandler extends XMLMappingHandler {
 	}
 	
 	class SegmentHandler extends XMLMappingHandler {
-		WaypointHandler waypointHandler = new WaypointHandler();
+		WaypointHandler waypointHandler = new WaypointHandler(waypoints);
 		List<Sequence> paths;
 		public SegmentHandler() {
 			setHandler( GPX.TRKPT, waypointHandler);
@@ -30,8 +31,8 @@ class TrackHandler extends XMLMappingHandler {
 		}
 		@Override
 		public void end() throws SAXException {
-			paths.add( waypointHandler.getPath() );
-			waypointHandler.clear();
+			paths.add( new Sequence(waypoints));
+			waypoints.clear();
 		}		
 	}
 	

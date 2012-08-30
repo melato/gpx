@@ -1,6 +1,7 @@
 package org.melato.gpx;
 
 public class Earth {
+  /** Earth's circumference in meters */
 	public static final float CIRCUMFERENCE = 40044000;
 
 	private static double square(double x) {
@@ -22,10 +23,27 @@ public class Earth {
 		double d = Math.sin(lat1)*Math.sin(lat2) +
 				Math.cos(lat1)*Math.cos(lat2)*Math.cos(lon1-lon2);
 		double d = Math.acos(d);
-		*/
-		return (float) (CIRCUMFERENCE * d / (2 * Math.PI));
+     */
+		return (float) (d * CIRCUMFERENCE / (2 * Math.PI));
+	}
+
+	/** Compute the latitude difference in degrees for a given distance on the same meridian.
+	 * @param distance in meters
+	 * @return latitude difference in degrees
+	 */
+	public static float latitudeForDistance(float distance) {
+	  return (float) (distance / CIRCUMFERENCE * 360);
 	}
 	
+  /** Compute the longitude difference in degrees for a given small distance on a given latitude.
+   * @param distance in meters
+   * @param latitude in degrees
+   * @return longitude difference in degrees
+   */
+	public static float longitudeForDistance(float distance, float lat) {
+    return (float) ((distance / CIRCUMFERENCE * 360)/ Math.cos(Math.toRadians(lat)));    
+  }
+  
   /**
    * Compute the  bearing between two points in degrees.  Does not use elevation.
    * @return

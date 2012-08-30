@@ -2,16 +2,16 @@ package org.melato.gpx;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 
-import org.melato.xml.XMLElementHandler;
 import org.melato.xml.XMLMappingHandler;
 import org.melato.xml.XMLStringHandler;
 import org.melato.xml.XMLTag;
 import org.xml.sax.SAXException;
 
 class WaypointHandler extends XMLMappingHandler {
-	List<Waypoint> waypoints;
+	Collection<Waypoint> waypoints;
 	XMLStringHandler nameHandler = new XMLStringHandler();
 	XMLStringHandler descHandler = new XMLStringHandler();
   XMLStringHandler symHandler = new XMLStringHandler();
@@ -23,12 +23,8 @@ class WaypointHandler extends XMLMappingHandler {
 	XMLStringHandler linkHandler = new StringListHandler(links);
 	Waypoint waypoint;
 	
-	public void clear() {
-		waypoints = new ArrayList<Waypoint>();
-	}
-	
-	public WaypointHandler() {
-		clear();
+	public WaypointHandler(Collection<Waypoint> waypoints) {
+		this.waypoints = waypoints;
 		setHandler(GPX.NAME, nameHandler);
 		setHandler(GPX.DESC, descHandler);
     setHandler(GPX.SYM, symHandler);
@@ -90,14 +86,4 @@ class WaypointHandler extends XMLMappingHandler {
 		float lon = getFloat(tag, GPX.LON);
 		return new Waypoint(lat, lon);
 	}
-	
-	public Sequence getPath() {
-		return new Sequence(waypoints);
-	}
-	public List<Waypoint> getWaypoints() {
-		return waypoints;
-	}
-	
-	
-
 }

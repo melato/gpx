@@ -10,8 +10,9 @@ import org.xml.sax.SAXException;
 
 class RouteHandler extends XMLMappingHandler {
 	private XMLStringHandler nameHandler = new XMLStringHandler();
-	private	List<Route> routes = new ArrayList<Route>();
-	private WaypointHandler waypointHandler = new WaypointHandler();
+	private	 List<Route> routes = new ArrayList<Route>();
+	private List<Waypoint> waypoints = new ArrayList<Waypoint>();
+	private WaypointHandler waypointHandler = new WaypointHandler(waypoints);
 
 	public RouteHandler() {
 		setHandler( GPX.NAME, nameHandler );
@@ -22,8 +23,8 @@ class RouteHandler extends XMLMappingHandler {
 	public void end() throws SAXException {
 		Route route = new Route();
 		route.name = nameHandler.getText();
-		route.path = waypointHandler.getPath();
-		waypointHandler.clear();
+		route.path = new Sequence(waypoints);
+		waypoints.clear();
 		routes.add(route);
 		
 	}
