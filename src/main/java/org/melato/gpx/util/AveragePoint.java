@@ -2,8 +2,11 @@ package org.melato.gpx.util;
 
 import java.util.List;
 
+import org.melato.gpx.GPX;
 import org.melato.gpx.Point;
+import org.melato.gpx.Route;
 import org.melato.gpx.Sequence;
+import org.melato.gpx.Track;
 import org.melato.gpx.Waypoint;
 
 public class AveragePoint {
@@ -29,6 +32,20 @@ public class AveragePoint {
   }
 	public void add(Sequence seq) {
 	  add( seq.getWaypoints() );
+	}
+	
+	public static Point getCenter(GPX gpx) {
+	  AveragePoint mean = new AveragePoint();
+	  mean.add(gpx.getWaypoints());
+    for( Route route: gpx.getRoutes() ) {
+      mean.add(route.path.getWaypoints());
+    }
+    for( Track track: gpx.getTracks() ) {
+      for( Sequence seq: track.getSegments() ) {
+        mean.add( seq.getWaypoints());
+      }
+    }
+    return mean.getCenter();
 	}
 }
 
