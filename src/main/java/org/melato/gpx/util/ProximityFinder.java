@@ -1,6 +1,5 @@
 package org.melato.gpx.util;
 
-import java.util.AbstractList;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -21,81 +20,13 @@ import org.melato.gpx.Waypoint;
  * because it also computes the sequence path length, but
  * the path length is usually needed anyway.
  */
-public class ProximityFinder {
-  /**
-   * For each point in the sequence, maintain the path of the sequence up to that point.
-   * This way we can easily compute path differences between two points.
-   */
-  static class SequencePoint {
-    Waypoint point;
-    float   distance;
-    public SequencePoint(Waypoint point, float distance) {
-      this.point = point;
-      this.distance = distance;
-    }    
-  }
-  private SequencePoint[] points;
+public class ProximityFinder extends Path {
   private float target = 0;
     
-  public void setSequence(List<Waypoint> sequence) {
-    points = new SequencePoint[sequence.size()];
-    double distance = 0;
-    Waypoint p0 = null;
-    for( int i = 0; i < points.length; i++ ) {
-      Waypoint p = sequence.get(i);
-      if ( i > 0 )
-        distance += Earth.distance(p0, p);
-      points[i] = new SequencePoint(p, (float) distance);
-      p0 = p;
-    }
-  }
   public void setTargetDistance( float d ) {
     target = d;
   }
   
-  /**
-   * Return the length of the sequence path between s[0] and s[index] (inclusive).
-   * @param index
-   * @return length in meters.
-   */
-  public float getPathLength(int index) {
-    return points[index].distance;
-  }
-  
-  /**
-   * Return the length of the sequence.
-   * @return length in meters.
-   */
-  public float getPathLength() {
-    if ( points.length == 0 )
-      return 0;
-    return points[points.length-1].distance;
-  }
-
-  /**
-   * Return the number of waypoints in the sequence.
-   */
-  public int size() {
-    return points.length;
-  }
-
-  /**
-   * Return the list of waypoints (not the original list, but an equivalent one).
-   * @return
-   */
-  List<Waypoint> waypoints() {
-    return new AbstractList<Waypoint>() {
-      @Override
-      public int size() {
-        return points.length;
-      }
-      
-      @Override
-      public Waypoint get(int index) {
-        return points[index].point;
-      }      
-    };
-  }
   /**
    * Determine if the query waypoint q, is near the subsequence between indexes i1, i2 (inclusive).
    * It uses binary search and recursion to split the susbsequence in two, etc. 
