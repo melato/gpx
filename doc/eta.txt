@@ -1,4 +1,4 @@
-Expected Time of Arrival at a stop
+Expected Time of Arrival at a waypoint along a route.
 
 
 - compute current location on the route (distance from start)

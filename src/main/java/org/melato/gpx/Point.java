@@ -2,11 +2,11 @@ package org.melato.gpx;
 
 import java.util.Date;
 
-/** A point in GPX spacetime (latitude, longitude, elevation, time) */
+/** A point in GPX spacetime (latitude, longitude, altitude, time) */
 public class Point {
 	public float	lat;
 	public float	lon;
-	public float    elevation = Float.NaN;
+	public float altitude = Float.NaN;
 	public Date		time;
 	public float speed;
 	
@@ -23,12 +23,12 @@ public class Point {
 		this.lon = lon;
 	}
 	
-	public float getElevation() {
-		return elevation;
+	public float getAltitude() {
+		return altitude;
 	}
-	public void setElevation(float elevation) {
-		this.elevation = elevation;
-	}
+  public void setAltitude(float altitude) {
+    this.altitude = altitude;
+  }
 	
 	public float getSpeed() {
     return speed;
@@ -60,7 +60,7 @@ public class Point {
 		super();
 		this.lat = lat;
 		this.lon = lon;
-		this.elevation = elevation;
+		this.altitude = elevation;
 		this.time = time;				
 	}
 	

@@ -62,7 +62,7 @@ class WaypointHandler extends XMLMappingHandler {
 		waypoint.desc = descHandler.getText();
     waypoint.sym = symHandler.getText();
 		waypoint.type = typeHandler.getText();
-		waypoint.elevation = getFloat(eleHandler);
+		waypoint.altitude = getFloat(eleHandler);
     waypoint.speed= getFloat(speedHandler);
 		waypoint.time = GPX.parseDate(timeHandler.getText());
 		if ( links.size() != 0 ) {

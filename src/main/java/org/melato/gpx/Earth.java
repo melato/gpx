@@ -9,7 +9,7 @@ public class Earth {
 	}
 
 	/**
-	 * Compute the distance between two points in meters.  Does not use elevation.
+	 * Compute the distance between two points in meters.  Does not use altitude.
 	 * @return
 	 */
 	public static float distance( Point p1, Point p2 ) {
@@ -45,7 +45,7 @@ public class Earth {
   }
   
   /**
-   * Compute the  bearing between two points in degrees.  Does not use elevation.
+   * Compute the  bearing between two points in degrees.  Does not use altitude.
    * @return
    */
   public static float bearing( Point p1, Point p2 ) {
