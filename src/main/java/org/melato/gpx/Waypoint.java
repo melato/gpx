@@ -55,13 +55,13 @@ public class Waypoint extends Point {
 	}
   public Waypoint(Point p) {
     this(p.lat, p.lon );
-    altitude = p.altitude;
+    elevation = p.elevation;
     time = p.time;
     speed = p.speed;
   }
 	public Waypoint(Waypoint p) {
 		this(p.lat, p.lon );
-		altitude = p.altitude;
+		elevation = p.elevation;
 		time = p.time;
 		sym = p.sym;
 		name = p.name;

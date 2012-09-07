@@ -35,8 +35,8 @@ public class GPXWriter {
 		xml.tagAttribute( "lat", String.valueOf(p.getLat()) );
 		xml.tagAttribute( "lon", String.valueOf(p.getLon()) );		
 		xml.tagClose();
-		if ( ! Float.isNaN( p.altitude ) ) {
-			write( xml, GPX.ELE, String.valueOf(p.altitude));
+		if ( ! Float.isNaN( p.elevation ) ) {
+			write( xml, GPX.ELE, String.valueOf(p.elevation));
 		}
 		write( xml, GPX.TYPE, p.getType() );
 		write( xml, GPX.NAME, p.getName() );
