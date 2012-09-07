@@ -267,6 +267,11 @@ public class ProximityFinder extends Path {
    * @param q  The waypoint to query.
    * @param nearby An output collection of indexes.
    */
+  /**
+   * Find all points of S whose distances from q are within the target distance and are also local minima.
+   * @param q  The waypoint to query.
+   * @param nearby An output collection for the resulting indexes.
+   */
   public void findNearby( Point q, Collection<Integer> nearby ) {
     findNearby(q, new Segment(0, points.length - 1), nearby );
   }
