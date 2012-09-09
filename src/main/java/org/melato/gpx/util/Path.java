@@ -11,7 +11,7 @@ import org.melato.gpx.Waypoint;
  * Represents a path consisting of a sequence of waypoints, and does relevant computations.
  */
 public class Path {
-  protected SequencePoint[] points;
+  protected PathPoint[] points;
   
   
   public Path() {
@@ -27,24 +27,24 @@ public class Path {
    * For each point in the sequence, maintain the path of the sequence up to that point.
    * This way we can easily compute path differences between two points.
    */
-  protected static class SequencePoint {
+  protected static class PathPoint {
     Waypoint point;
     float   distance;
-    public SequencePoint(Waypoint point, float distance) {
+    public PathPoint(Waypoint point, float distance) {
       this.point = point;
       this.distance = distance;
     }    
   }
 
   public void setSequence(List<Waypoint> sequence) {
-    points = new SequencePoint[sequence.size()];
+    points = new PathPoint[sequence.size()];
     double distance = 0;
     Waypoint p0 = null;
     for( int i = 0; i < points.length; i++ ) {
       Waypoint p = sequence.get(i);
       if ( i > 0 )
         distance += Earth.distance(p0, p);
-      points[i] = new SequencePoint(p, (float) distance);
+      points[i] = new PathPoint(p, (float) distance);
       p0 = p;
     }
   }
@@ -80,6 +80,11 @@ public class Path {
     return minIndex;
   }
   
+  /**
+   * Find the two closest waypoints to a given point.
+   * @param p
+   * @return
+   */
   private int[] find2Neighbors(Point p) {
     int[] neighbors = new int[2];
     int closest = findNearestIndex(p);
