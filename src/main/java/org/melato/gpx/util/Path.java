@@ -1,6 +1,5 @@
 package org.melato.gpx.util;
 
-import java.util.AbstractList;
 import java.util.List;
 
 import org.melato.gpx.Earth;
@@ -67,7 +66,7 @@ public class Path {
     return points[points.length-1].distance;
   }
 
-  private int findNearestIndex(Point p) {
+  public int findNearestIndex(Point p) {
     float minDistance = 0;
     int minIndex = -1;
     for( int i = 0; i < points.length; i++ ) {
@@ -81,11 +80,12 @@ public class Path {
   }
   
   /**
-   * Find the two closest waypoints to a given point.
+   * Find the two closest consecutive waypoints to a given point.
+   * This is public for testing purposes in order to test the algorithm.
    * @param p
    * @return
    */
-  private int[] find2Neighbors(Point p) {
+  public int[] find2Neighbors(Point p) {
     int[] neighbors = new int[2];
     int closest = findNearestIndex(p);
     if ( closest == 0 ) {
@@ -109,6 +109,19 @@ public class Path {
     return neighbors;
   }
   
+  /**
+   * Determine the path length of a given point.
+   * Use a simple heuristic that does not keep track of previous points
+   * It is accurate on a straight path but has some small discontinuities when
+   * there are corners.
+   * Other possible algorithms:
+   * Keep track of previous points and use the information.
+   *   (need to determine when the point is no longer on the path).
+   * Take into account 3-4 consecutive waypoints and create some sort of interpolation (cubic spline?)
+   * to model the path. 
+   * @param p
+   * @return
+   */
   public float getPathLength(Point p) {
     if ( points.length < 2 )
       return Float.NaN;
@@ -128,13 +141,18 @@ public class Path {
     - if s < d2 < d1, q is before S1.  P = p1 - d1
      */
     if ( d1 < s && d2 < s ) {
-      return p1 + s * d1 / (d1 + d2);
+      if ( d1 < d2 )
+        return p1 + s * d1 / (d1 + d2);
+      else
+        return p2 - s * d2 / (d1 + d2);
     }
     if ( d1 < d2 ) {
-      return p2 + d2; 
+      // p is closest to p1.
+      return p1 + d1; // or p1 - d1 
     }
     if( d2 < d1 ) {
-      return p1 - d1;
+      // p is closest to p2.
+      return p2 - d2; // p2 + d2
     }
     return Float.NaN;
   }
@@ -152,23 +170,5 @@ public class Path {
       }
     }
     return -1;
-  }
-  
-  /**
-   * Return the list of waypoints (not the original list, but an equivalent one).
-   * @return
-   */
-  List<Waypoint> waypoints() {
-    return new AbstractList<Waypoint>() {
-      @Override
-      public int size() {
-        return points.length;
-      }
-      
-      @Override
-      public Waypoint get(int index) {
-        return points[index].point;
-      }      
-    };
   }
 }
