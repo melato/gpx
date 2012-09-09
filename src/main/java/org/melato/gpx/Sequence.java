@@ -83,7 +83,7 @@ public class Sequence implements Cloneable {
 
   @Override
   public Sequence clone() throws CloneNotSupportedException {
-    List<Waypoint> list = new ArrayList(waypoints.size());
+    List<Waypoint> list = new ArrayList<Waypoint>(waypoints.size());
     list.addAll(waypoints);
     return new Sequence(list);
   }
