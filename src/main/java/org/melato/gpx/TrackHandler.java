@@ -11,12 +11,14 @@ import org.xml.sax.SAXException;
 
 class TrackHandler extends XMLMappingHandler {
 	private XMLStringHandler nameHandler = new XMLStringHandler();
+  private XMLStringHandler descHandler = new XMLStringHandler();
 	private List<Track> tracks = new ArrayList<Track>();
 	private List<Waypoint> waypoints = new ArrayList<Waypoint>();
 	SegmentHandler segHandler = new SegmentHandler();
 
 	public TrackHandler() {
 		setHandler( GPX.NAME, nameHandler );
+    setHandler( GPX.DESC, descHandler );
 		setHandler( GPX.TRKSEG, segHandler );
 	}
 	
@@ -41,7 +43,8 @@ class TrackHandler extends XMLMappingHandler {
 	@Override
 	public void end() throws SAXException {
 		Track track = new Track();
-		track.name = nameHandler.getText();
+		track.setName(nameHandler.getText());
+    track.setDesc(descHandler.getText());
 		track.segments = segHandler.paths;
 		segHandler.clear();
 		tracks.add(track);

@@ -72,9 +72,9 @@ public class GPXXmlWriter extends GPXSerializer {
     xml.tagOpen(GPX.GPX, false);
     xml.tagAttribute( "version", "1.1");
     xml.tagAttribute( "creator", "melato.org - http://melato.org");
-      xml.tagAttribute( "xmlns", "http://www.topografix.com/GPX/1/1");
-      xml.tagAttribute( "xmlns:xsi", "http://www.w3.org/2001/XMLSchema-instance");
-      xml.tagAttribute( "xsi:schemaLocation", "http://www.topografix.com/GPX/1/1 http://www.topografix.com/GPX/1/1/gpx.xsd");
+    xml.tagAttribute( "xmlns", "http://www.topografix.com/GPX/1/1");
+    xml.tagAttribute( "xmlns:xsi", "http://www.w3.org/2001/XMLSchema-instance");
+    xml.tagAttribute( "xsi:schemaLocation", "http://www.topografix.com/GPX/1/1 http://www.topografix.com/GPX/1/1/gpx.xsd");
     xml.tagClose();
     xml.println();
 	}
@@ -82,25 +82,29 @@ public class GPXXmlWriter extends GPXSerializer {
 	@Override
   public void closeGpx() {
     xml.tagEnd(GPX.GPX);
+    xml.println();
+    
     xml.close();    
   }
 	
   @Override
   public void openRoute(Route route) {
     xml.tagOpen(GPX.RTE);
+    write(xml, GPX.NAME, route.getName()); 
     waypointTag = GPX.RTEPT;
   }
   
   @Override
   public void closeRoute() {
     xml.tagEnd(GPX.RTE);
-    xml.println();
     waypointTag = GPX.WPT;
   }
   
   @Override
   public void openTrack(Track track) {
     xml.tagOpen(GPX.TRK);
+    write(xml, GPX.NAME, track.getName()); 
+    write(xml, GPX.DESC, track.getDesc()); 
   }
   
   @Override

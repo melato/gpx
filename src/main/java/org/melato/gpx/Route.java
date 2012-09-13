@@ -6,6 +6,7 @@ import java.util.List;
 public class Route implements Cloneable {
 	public Sequence path;
 	public String name;
+  public String label;
   
 	
   public Route() {
@@ -27,10 +28,21 @@ public class Route implements Cloneable {
     return name;
   }
 	
-	public List<Waypoint> getWaypoints() {
+  public void setName(String name) {
+    this.name = name;
+  }
+  
+	public String getLabel() {
+    return label;
+  }
+
+  public void setLabel(String label) {
+    this.label = label;
+  }
+
+  public List<Waypoint> getWaypoints() {
 	  return path.getWaypoints();
 	}
-
 	
   public Sequence getPath() {
     return path;
@@ -38,10 +50,6 @@ public class Route implements Cloneable {
 
   public void setPath(Sequence path) {
     this.path = path;
-  }
-
-  public void setName(String name) {
-    this.name = name;
   }
 
   @Override
