@@ -3,19 +3,18 @@ package org.melato.gpx;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.AbstractCollection;
 import java.util.Date;
-import java.util.Iterator;
 import java.util.TimeZone;
 
 import org.melato.xml.XMLWriter;
 
 /** Writes gpx data to gpx (XML) files. */
-public class GPXXmlWriter extends AbstractCollection<Waypoint> {
+public class GPXXmlWriter extends GPXSerializer {
 	DateFormat format;
 	XMLWriter xml;
 	String waypointTag = GPX.WPT;
-	int waypointCount = 0;
+  protected int waypointCount = 0;
+
 
 	public GPXXmlWriter(XMLWriter xml) {
 		format = new SimpleDateFormat( "yyyy-MM-dd'T'HH:mm:ss");
@@ -26,6 +25,14 @@ public class GPXXmlWriter extends AbstractCollection<Waypoint> {
 	private String formatDate(Date date) {
 		return format.format(date) + "Z";
 	}
+	
+  @Override
+  public int size() {
+    return waypointCount;
+  }    
+
+  
+	
 	private void write( XMLWriter xml, String tag, String text ) {
 		if ( text == null )
 			return;
@@ -35,7 +42,7 @@ public class GPXXmlWriter extends AbstractCollection<Waypoint> {
 		xml.println();
 	}
 	
-	@Override
+  @Override
 	public boolean add(Waypoint p ) {
 	  waypointCount++;
 		xml.tagOpen(waypointTag, false);
@@ -58,22 +65,10 @@ public class GPXXmlWriter extends AbstractCollection<Waypoint> {
 		xml.println();
 		return true;
 	}
-	
 
-	
-  @Override
-  public Iterator<Waypoint> iterator() {
-    throw new UnsupportedOperationException();
-  }
-
-  @Override
-  public int size() {
-    return waypointCount;
-  }    
-
-	public void openGpx() {
+	@Override
+  public void openGpx() {
     waypointCount = 0;
-    xml.printHeader();
     xml.tagOpen(GPX.GPX, false);
     xml.tagAttribute( "version", "1.1");
     xml.tagAttribute( "creator", "melato.org - http://melato.org");
@@ -83,61 +78,54 @@ public class GPXXmlWriter extends AbstractCollection<Waypoint> {
     xml.tagClose();
     xml.println();
 	}
+
+	@Override
   public void closeGpx() {
     xml.tagEnd(GPX.GPX);
     xml.close();    
   }
 	
-  public void openRoute() {
+  @Override
+  public void openRoute(Route route) {
     xml.tagOpen(GPX.RTE);
     waypointTag = GPX.RTEPT;
   }
   
+  @Override
   public void closeRoute() {
     xml.tagEnd(GPX.RTE);
     xml.println();
     waypointTag = GPX.WPT;
   }
   
-  public void openTrack() {
+  @Override
+  public void openTrack(Track track) {
     xml.tagOpen(GPX.TRK);
   }
   
+  @Override
   public void closeTrack() {
     xml.tagEnd(GPX.TRK);
     waypointTag = GPX.WPT;
   }
   
+  @Override
   public void openSegment() {
     xml.tagOpen(GPX.TRKSEG);
     waypointTag = GPX.TRKPT;
   }
   
+  @Override
   public void closeSegment() {
     xml.tagEnd(GPX.TRKSEG);
     xml.println();
     waypointTag = GPX.WPT;
   }
   
-	public void write( GPX gpx) throws IOException {
+  public void write( GPX gpx) throws IOException {
 		try {
-		  openGpx();
-			addAll(gpx.getWaypoints() );
-			for( Route route: gpx.getRoutes() ) {
-			  openRoute();
-				addAll(route.path.getWaypoints());
-				closeRoute();
-			}
-			for( Track track: gpx.getTracks() ) {
-			  openTrack();
-				for( Sequence path: track.getSegments() ) {
-				  openSegment();
-          addAll( path.getWaypoints());
-				  closeSegment();
-				}
-				closeTrack();
-			}			
-			closeGpx();
+		  xml.printHeader();
+		  super.addGPX(gpx);
 		} finally {
 			xml.close();
 		}

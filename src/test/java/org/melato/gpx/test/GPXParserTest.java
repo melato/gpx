@@ -7,6 +7,7 @@ import java.util.List;
 import org.junit.Assert;
 import org.junit.Test;
 import org.melato.gpx.GPX;
+import org.melato.gpx.GPXBuilder;
 import org.melato.gpx.GPXParser;
 import org.melato.gpx.Route;
 import org.melato.gpx.Track;
@@ -47,5 +48,13 @@ public class GPXParserTest {
 	    Waypoint p = waypoints.get(waypoints.size()-1);
 	    Assert.assertEquals( 6.0f, p.getSpeed(), 0.001f);
 	  }
+   public @Test void builderTest() throws IOException {
+     InputStream input = getClass().getResourceAsStream("test.gpx");
+     GPXParser parser = new GPXParser();
+     GPX gpx = parser.parse(input);
+     GPXBuilder builder = new GPXBuilder();
+     builder.addGPX(gpx);
+     gpx = builder.getGpx();
+   }
 
 }
