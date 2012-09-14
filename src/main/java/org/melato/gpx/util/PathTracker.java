@@ -22,6 +22,7 @@ public interface PathTracker {
 
   void setPath(Path path);
 
+  void clearLocation();
   /**
    * Add a new location to the track, which becomes the current location.
    * The sequence of calls to setLocation() matters because it provides a series of past locations
