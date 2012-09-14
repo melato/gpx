@@ -70,6 +70,10 @@ public class Waypoint extends Point {
 	}
 	public String toString() {
 		StringBuilder buf = new StringBuilder();
+		if ( name != null ) {
+		  buf.append( name );
+		  buf.append( " " );
+		}
 		buf.append( lat );
 		buf.append( ';' );
 		buf.append( lon );
