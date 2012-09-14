@@ -35,6 +35,14 @@ public class Earth {
 	  return (float) (distance / CIRCUMFERENCE * 360);
 	}
 	
+	public static float metersPerDegreeLatitude() {
+    return CIRCUMFERENCE / 360;
+	}
+	
+  public static float metersPerDegreeLongitude(float latitude) {
+    return (float) ((CIRCUMFERENCE / 360) * Math.cos(Math.toRadians(latitude)));    
+  }
+	
   /** Compute the longitude difference in degrees for a given small distance on a given latitude.
    * @param distance in meters
    * @param latitude in degrees
