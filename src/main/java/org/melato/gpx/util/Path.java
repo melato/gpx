@@ -8,6 +8,9 @@ import org.melato.gpx.Waypoint;
 
 /**
  * Represents a path consisting of a sequence of waypoints.
+ * Computes path-distances between waypoints along this path.
+ * The path-distance between points i, j is defined as the sum
+ * if distances between each two adjacent waypoints from i to j.
  */
 public class Path {
   protected Waypoint[] waypoints;
