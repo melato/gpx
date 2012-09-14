@@ -20,13 +20,24 @@ import org.melato.gpx.Waypoint;
  * because it also computes the sequence path length, but
  * the path length is usually needed anyway.
  */
-public class ProximityFinder extends Path {
+public class ProximityFinder {
   private float target = 0;
-    
+  private float[] lengths;
+  private Waypoint[] waypoints;
   public void setTargetDistance( float d ) {
     target = d;
   }
   
+  public void setPath(Path path) {
+    waypoints = path.getWaypoints();
+    lengths = path.getLengths();
+  }
+  
+  public void setWaypoints(List<Waypoint> waypoints) {
+    setPath(new Path(waypoints));
+  }
+
+
   /**
    * Determine if the query waypoint q, is near the subsequence between indexes i1, i2 (inclusive).
    * It uses binary search and recursion to split the susbsequence in two, etc. 
@@ -36,16 +47,16 @@ public class ProximityFinder extends Path {
    * @return
    */
   private boolean isNear(Waypoint q, int i1, int i2) {
-    float d1 = Earth.distance(q,  points[i1].point);
+    float d1 = Earth.distance(q,  waypoints[i1]);
     if ( d1 <= target )
       return true;
-    float d2 = Earth.distance(q,  points[i2].point);
+    float d2 = Earth.distance(q,  waypoints[i2]);
     if ( d2 <= target )
       return true;
-    float path = Math.abs((float) (points[i1].distance - points[i2].distance));
-    if ( d1 - path > target )
+    float diff = Math.abs(lengths[i1] - lengths[i2]);
+    if ( d1 - diff > target )
       return false;
-    if ( d2 - path > target )
+    if ( d2 - diff > target )
       return false;
     int di = i2 - i1;
     if ( di <= 1 ) {
@@ -54,7 +65,7 @@ public class ProximityFinder extends Path {
     }
     if ( di == 2 ) {
       // there is only one other point in the segment.  Try it.
-      return Earth.distance(q,  points[i1+1].point) <= target;
+      return Earth.distance(q,  waypoints[i1+1]) <= target;
     }      
     // subdivide the segment in two and try each one.
     int j1 = i1 + di / 2;
@@ -80,9 +91,9 @@ public class ProximityFinder extends Path {
      * if distance(q,s1) <= target then q is near s1.
      * if distance(q,s2) <= target then q is near s2.
      */
-    if ( points.length == 0 )
+    if ( waypoints.length == 0 )
       return false;
-    return isNear( q, 0, points.length - 1 );
+    return isNear( q, 0, waypoints.length - 1 );
   }
 
   /**
@@ -141,13 +152,13 @@ public class ProximityFinder extends Path {
    */
   private Segment findNearbySegment(Point q, int index) {
     Segment s = new Segment();
-    float minDistance = Earth.distance(q, points[index].point);
+    float minDistance = Earth.distance(q, waypoints[index]);
     if ( minDistance > target )
       return s;
     s.first = s.last = s.closest = index;
     // search forward
-    for( int i = index + 1; i < points.length; i++ ) {
-      float d = Earth.distance(q, points[i].point);
+    for( int i = index + 1; i < waypoints.length; i++ ) {
+      float d = Earth.distance(q, waypoints[i]);
       if ( d > target ) {
         break;
       }
@@ -159,7 +170,7 @@ public class ProximityFinder extends Path {
     }    
     // search backward
     for( int i = index - 1; i >= 0; i-- ) {
-      float d = Earth.distance(q, points[i].point);
+      float d = Earth.distance(q, waypoints[i]);
       if ( d > target ) {
         break;
       }
@@ -187,13 +198,13 @@ public class ProximityFinder extends Path {
       return;
 
     // first check the whole segment for possible nearness.
-    float d1 = Earth.distance(q,  points[segment.first].point);
-    float d2 = Earth.distance(q,  points[segment.last].point);
-    float path = Math.abs((float) (points[segment.last].distance - points[segment.first].distance));
+    float d1 = Earth.distance(q,  waypoints[segment.first]);
+    float d2 = Earth.distance(q,  waypoints[segment.last]);
+    float distance = Math.abs(lengths[segment.last] - lengths[segment.first]);
     // If the whole segment is obviously too far, don't go any further.
-    if ( d1 - path > target )
+    if ( d1 - distance > target )
       return;
-    if ( d2 - path > target )
+    if ( d2 - distance > target )
       return;
     
     // check the endpoints for proximity
@@ -247,7 +258,7 @@ public class ProximityFinder extends Path {
     }
     if ( size == 3 ) {
       // there is only one other point in the segment.  Try it.
-      if ( Earth.distance(q,  points[segment.first+1].point) <= target ) {
+      if ( Earth.distance(q,  waypoints[segment.first+1]) <= target ) {
         nearby.add(segment.first+1);
         //System.out.println( "found " + segment.first+1 );
         return;
@@ -273,7 +284,7 @@ public class ProximityFinder extends Path {
    * @param nearby An output collection for the resulting indexes.
    */
   public void findNearby( Point q, Collection<Integer> nearby ) {
-    findNearby(q, new Segment(0, points.length - 1), nearby );
+    findNearby(q, new Segment(0, waypoints.length - 1), nearby );
   }
   
   /**
@@ -283,7 +294,7 @@ public class ProximityFinder extends Path {
    */
   public List<Integer> findNearbyIndexes( Point q ) {
     List<Integer> nearby = new ArrayList<Integer>();
-    findNearby(q, new Segment(0, points.length - 1), nearby );
+    findNearby(q, new Segment(0, waypoints.length - 1), nearby );
     return nearby;
   }
   
@@ -301,7 +312,7 @@ public class ProximityFinder extends Path {
     int minIndex = -1;
     for( int i = 0; i < count; i++ ) {
       int index = nearby.get(i);
-      float d = Earth.distance(q, points[index].point );
+      float d = Earth.distance(q, waypoints[index]);
       if ( i == 0 || d < minDistance ) {
         minDistance = d;
         minIndex = index;

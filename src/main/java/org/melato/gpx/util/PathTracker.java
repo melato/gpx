@@ -1,34 +1,13 @@
 package org.melato.gpx.util;
 
-import java.util.List;
-
 import org.melato.gpx.Point;
-import org.melato.gpx.Waypoint;
 
 public interface PathTracker {
 
-  void setWaypoints(List<Waypoint> sequence);
-
-  List<Waypoint> getWaypoints();
+  void setPath(Path path);
 
   /**
-   * Return the length of the sequence path between s[0] and s[index].
-   * @param index
-   * @return length in meters.
-   */
-  float getSequenceLength(int index);
-
-  /**
-   * Return the length of the sequence.
-   * @return length in meters.
-   */
-  float getSequenceLength();
-
-  /////////////////////////////
-  /////////////////////////////
-  
-  /**
-   * Set the current location.
+   * Add a new location to the track, which becomes the current location.
    * The sequence of calls to setLocation() matters because it provides a series of past locations
    * that the path may use in its algorithm.
    * @param p
@@ -54,6 +33,6 @@ public interface PathTracker {
    * @param p
    * @return
    */
-  float getPathPosition();
+  float getPosition();
 
 }

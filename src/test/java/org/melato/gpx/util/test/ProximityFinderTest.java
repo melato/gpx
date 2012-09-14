@@ -28,7 +28,7 @@ public class ProximityFinderTest {
     Waypoint query = new Waypoint(lat, 24f + step);
     Waypoint s0 = seq[offset];  // this is the nearest point on the sequence.
     ProximityFinder f = new ProximityFinder();
-    f.setSequence(Arrays.asList(seq));
+    f.setWaypoints(Arrays.asList(seq));
     float d = Earth.distance(s0, query);
     f.setTargetDistance(d + 50);
     Assert.assertTrue(f.isNear(query));
@@ -57,7 +57,7 @@ public class ProximityFinderTest {
     Waypoint s0 = seq[offset];  // this is the nearest point on the sequence.
     float d = Earth.distance(s0, query);
     ProximityFinder f = new ProximityFinder();
-    f.setSequence(Arrays.asList(seq));
+    f.setWaypoints(Arrays.asList(seq));
     f.setTargetDistance(d + 50); // add a small amount to the known distance to account for rounding errors.
     List<Integer> nearby = f.findNearbyIndexes(query);
     Assert.assertEquals(1, nearby.size());
