@@ -11,12 +11,6 @@ import org.melato.gpx.GPX;
 
 public class TimeTest {
 
-	public @Test void timezones() {
-		for( String id: TimeZone.getAvailableIDs() ) {
-			//System.out.println( id );
-		}
-	}	
-	
 	public @Test void parseDate() {
 		String datestring = "2011-09-25T13:24:35Z";
 		Date date = GPX.parseDate(datestring);
