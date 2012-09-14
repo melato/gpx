@@ -27,7 +27,9 @@ public class Path {
   public Path(Waypoint[] waypoints) {
     setWaypoints(waypoints);
   }
-  
+  public int size() {
+    return lengths.length;
+  }  
   public void setPath(Path path) {
     this.waypoints = path.waypoints;
     this.lengths = path.lengths;
@@ -56,6 +58,10 @@ public class Path {
   public Waypoint[] getWaypoints() {
     return waypoints;
   }
+  
+  public Waypoint getWaypoint(int index) {
+    return waypoints[index];
+  }
 
   public float[] getLengths() {
     return lengths;
@@ -69,6 +75,15 @@ public class Path {
     return lengths[index];
   }
   
+  /** Get the length of the path from point 1 to point 2
+   * @param index1
+   * @param index2
+   * @return The path distance, positive if index1 < index2
+   */
+  public float getLength(int index1, int index2) {
+    return lengths[index2] - lengths[index1];
+  }
+  
   /**
    * Return the length of the sequence.
    * @return length in meters.
@@ -79,6 +94,12 @@ public class Path {
     return lengths[lengths.length-1];
   }
 
+  /**
+   * Find the index of the path waypoint that is closest to p.
+   * If there are more than one such indexes, return the smallest one.  
+   * @param p
+   * @return
+   */
   public int findNearestIndex(Point p) {
     float minDistance = 0;
     int minIndex = -1;
