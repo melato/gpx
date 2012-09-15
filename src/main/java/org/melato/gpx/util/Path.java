@@ -1,5 +1,6 @@
 package org.melato.gpx.util;
 
+import java.util.Arrays;
 import java.util.List;
 
 import org.melato.gpx.Earth;
@@ -111,6 +112,50 @@ public class Path {
       }
     }
     return minIndex;
+  }
+
+  /**
+   * Find the closest index from the sub-path [index1, index2], inclusive
+   */
+  public int findNearestIndex(Point point, int index1, int index2) {
+    float minDistance = 0;
+    int minIndex = -1;
+    for( int index = index1; index <= index2; index++ ) {
+      if ( 0 <= index && index < size() ) {
+        float d = Earth.distance(point,  getWaypoint(index));
+        if ( d < minDistance ) {
+          minIndex = index;
+          minDistance = d;
+        }
+      }
+    }
+    return minIndex;
+  }
+  
+  
+  public int findNearestIndex(float position) {
+    if ( lengths.length == 0 )
+      return -1;
+    if ( position < 0 )
+      return 0;
+    if ( position > lengths.length )
+      return size() - 1;
+    int pos = Arrays.binarySearch(lengths, position);
+    if ( pos >= 0 ) {
+      return pos;
+    } else {
+      pos = -(pos+1);
+      // pos is the index where position would be inserted in the array to keep it sorted
+      if ( pos == 0 )
+        return pos;
+      if ( pos >= lengths.length )
+        return lengths.length - 1;
+      float d1 = position - lengths[pos-1];
+      float d2 = lengths[pos] - position;
+      if ( d1 < d2 )
+        return pos -1;
+      return pos;
+    }    
   }
   
 }
