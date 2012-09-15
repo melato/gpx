@@ -11,7 +11,7 @@ import org.melato.gpx.Waypoint;
  * This is temporary, as it often gives incorrect results.
  * It handles mostly straight paths that don't cross themselves.
  */
-public class SimplePathTracker implements PathTracker {
+public class SimplePathTracker implements TrackingAlgorithm {
   private Path path;
   private int  pathSize;
 
