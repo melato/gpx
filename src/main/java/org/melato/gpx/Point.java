@@ -9,7 +9,8 @@ public class Point {
 	/** GPX uses the term elevation, rather than altitude. */
 	public float elevation = Float.NaN;
 	public Date		time;
-	public float speed;
+	public float speed = Float.NaN;
+	public float bearing = Float.NaN;
 	
 	public float getLat() {
 		return lat;
@@ -45,6 +46,13 @@ public class Point {
   public void setSpeed(float speed) {
     this.speed = speed;
   }
+    
+  public float getBearing() {
+    return bearing;
+  }
+  public void setBearing(float bearing) {
+    this.bearing = bearing;
+  }
   public Date getTime() {
 		return time;
 	}
@@ -56,6 +64,9 @@ public class Point {
 		return ((float) (p2.time.getTime() - p1.time.getTime())) / 1000;
 	}
 	
+  public void setTime(long time) {
+    this.time = new Date(time);
+  }
 	public void setTime(Date time) {
 		this.time = time;
 	}
