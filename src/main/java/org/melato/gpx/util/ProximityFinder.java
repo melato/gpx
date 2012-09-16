@@ -4,7 +4,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import org.melato.gpx.Earth;
+import org.melato.gpx.GlobalDistance;
+import org.melato.gpx.Metric;
 import org.melato.gpx.Point;
 import org.melato.gpx.Waypoint;
 
@@ -21,6 +22,7 @@ import org.melato.gpx.Waypoint;
  * the path length is usually needed anyway.
  */
 public class ProximityFinder {
+  private Metric metric = new GlobalDistance();
   private float target = 0;
   private float[] lengths;
   private Waypoint[] waypoints;
@@ -47,10 +49,10 @@ public class ProximityFinder {
    * @return
    */
   private boolean isNear(Waypoint q, int i1, int i2) {
-    float d1 = Earth.distance(q,  waypoints[i1]);
+    float d1 = metric.distance(q,  waypoints[i1]);
     if ( d1 <= target )
       return true;
-    float d2 = Earth.distance(q,  waypoints[i2]);
+    float d2 = metric.distance(q,  waypoints[i2]);
     if ( d2 <= target )
       return true;
     float diff = Math.abs(lengths[i1] - lengths[i2]);
@@ -65,7 +67,7 @@ public class ProximityFinder {
     }
     if ( di == 2 ) {
       // there is only one other point in the segment.  Try it.
-      return Earth.distance(q,  waypoints[i1+1]) <= target;
+      return metric.distance(q,  waypoints[i1+1]) <= target;
     }      
     // subdivide the segment in two and try each one.
     int j1 = i1 + di / 2;
@@ -152,13 +154,13 @@ public class ProximityFinder {
    */
   private Segment findNearbySegment(Point q, int index) {
     Segment s = new Segment();
-    float minDistance = Earth.distance(q, waypoints[index]);
+    float minDistance = metric.distance(q, waypoints[index]);
     if ( minDistance > target )
       return s;
     s.first = s.last = s.closest = index;
     // search forward
     for( int i = index + 1; i < waypoints.length; i++ ) {
-      float d = Earth.distance(q, waypoints[i]);
+      float d = metric.distance(q, waypoints[i]);
       if ( d > target ) {
         break;
       }
@@ -170,7 +172,7 @@ public class ProximityFinder {
     }    
     // search backward
     for( int i = index - 1; i >= 0; i-- ) {
-      float d = Earth.distance(q, waypoints[i]);
+      float d = metric.distance(q, waypoints[i]);
       if ( d > target ) {
         break;
       }
@@ -198,8 +200,8 @@ public class ProximityFinder {
       return;
 
     // first check the whole segment for possible nearness.
-    float d1 = Earth.distance(q,  waypoints[segment.first]);
-    float d2 = Earth.distance(q,  waypoints[segment.last]);
+    float d1 = metric.distance(q,  waypoints[segment.first]);
+    float d2 = metric.distance(q,  waypoints[segment.last]);
     float distance = Math.abs(lengths[segment.last] - lengths[segment.first]);
     // If the whole segment is obviously too far, don't go any further.
     if ( d1 - distance > target )
@@ -258,7 +260,7 @@ public class ProximityFinder {
     }
     if ( size == 3 ) {
       // there is only one other point in the segment.  Try it.
-      if ( Earth.distance(q,  waypoints[segment.first+1]) <= target ) {
+      if ( metric.distance(q,  waypoints[segment.first+1]) <= target ) {
         nearby.add(segment.first+1);
         //System.out.println( "found " + segment.first+1 );
         return;
@@ -312,7 +314,7 @@ public class ProximityFinder {
     int minIndex = -1;
     for( int i = 0; i < count; i++ ) {
       int index = nearby.get(i);
-      float d = Earth.distance(q, waypoints[index]);
+      float d = metric.distance(q, waypoints[index]);
       if ( i == 0 || d < minDistance ) {
         minDistance = d;
         minIndex = index;

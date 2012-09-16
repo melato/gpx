@@ -3,7 +3,8 @@ package org.melato.gpx.util;
 import java.util.Arrays;
 import java.util.List;
 
-import org.melato.gpx.Earth;
+import org.melato.gpx.GlobalDistance;
+import org.melato.gpx.Metric;
 import org.melato.gpx.Point;
 import org.melato.gpx.Waypoint;
 
@@ -14,10 +15,20 @@ import org.melato.gpx.Waypoint;
  * if distances between each two adjacent waypoints from i to j.
  */
 public class Path {
+  private Metric metric = new GlobalDistance();
   protected Waypoint[] waypoints;
   protected float[]   lengths;
   
   public Path() {
+    setWaypoints( new Waypoint[0] );
+  }
+  
+  public Metric getMetric() {
+    return metric;
+  }
+
+  public Path(Metric metric) {
+    this.metric = metric;
     setWaypoints( new Waypoint[0] );
   }
   
@@ -43,7 +54,7 @@ public class Path {
       Waypoint p0 = waypoints[0];
       for( int i = 1; i < lengths.length; i++ ) {
         Waypoint p = waypoints[i];
-        distance += Earth.distance(p0, p);
+        distance += metric.distance(p0, p);
         lengths[i] = (float) distance;
         p0 = p;
       }    
@@ -105,7 +116,7 @@ public class Path {
     float minDistance = 0;
     int minIndex = -1;
     for( int i = 0; i < waypoints.length; i++ ) {
-      float d = Earth.distance(p,  waypoints[i]);
+      float d = metric.distance(p,  waypoints[i]);
       if ( minIndex < 0 || d < minDistance ) {
         minDistance = d;
         minIndex = i;
@@ -122,7 +133,7 @@ public class Path {
     int minIndex = -1;
     for( int index = index1; index <= index2; index++ ) {
       if ( 0 <= index && index < size() ) {
-        float d = Earth.distance(point,  getWaypoint(index));
+        float d = metric.distance(point,  getWaypoint(index));
         if ( d < minDistance ) {
           minIndex = index;
           minDistance = d;

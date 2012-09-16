@@ -36,21 +36,36 @@ public class GPXXmlWriter extends GPXSerializer {
 	private void write( XMLWriter xml, String tag, String text ) {
 		if ( text == null )
 			return;
+    xml.println();
 		xml.tagOpen(tag);
 		xml.text(text);
 		xml.tagEnd(tag );
-		xml.println();
 	}
 	
+  private void write( XMLWriter xml, String tag, float value) {
+    if ( ! Float.isNaN(value)) {
+      write(xml, tag, String.valueOf(value));
+    }
+  }
+  
   @Override
 	public boolean add(Waypoint p ) {
 	  waypointCount++;
+    xml.println();
 		xml.tagOpen(waypointTag, false);
 		xml.tagAttribute( "lat", String.valueOf(p.getLat()) );
 		xml.tagAttribute( "lon", String.valueOf(p.getLon()) );		
 		xml.tagClose();
 		if ( ! Float.isNaN( p.elevation ) ) {
 			write( xml, GPX.ELE, String.valueOf(p.elevation));
+		}
+		float speed = p.getSpeed();
+		float bearing = p.getBearing();
+		if ( ! Float.isNaN(speed) && ! Float.isNaN(bearing)) {
+	    xml.tagOpen(GPX.EXTENSIONS);
+	    write(xml, GPX.SPEED, speed );
+      write(xml, GPX.COURSE, bearing);
+	    xml.tagEnd(GPX.EXTENSIONS);
 		}
 		write( xml, GPX.TYPE, p.getType() );
 		write( xml, GPX.NAME, p.getName() );
@@ -62,7 +77,6 @@ public class GPXXmlWriter extends GPXSerializer {
 		  write( xml, GPX.LINK, link );
 		}
 		xml.tagEnd(waypointTag);
-		xml.println();
 		return true;
 	}
 
@@ -121,8 +135,8 @@ public class GPXXmlWriter extends GPXSerializer {
   
   @Override
   public void closeSegment() {
-    xml.tagEnd(GPX.TRKSEG);
     xml.println();
+    xml.tagEnd(GPX.TRKSEG);
     waypointTag = GPX.WPT;
   }
   

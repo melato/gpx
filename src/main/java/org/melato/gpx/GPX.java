@@ -30,6 +30,7 @@ public class GPX {
 	public static final String ELE = "ele";
 	public static final String TIME = "time";
   public static final String SPEED = "gpx10:speed";
+  public static final String COURSE = "gpx10:course";
 
 	public static final String WPT = "wpt";	
 	public static final String RTE = "rte";
