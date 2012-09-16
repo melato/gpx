@@ -19,6 +19,7 @@ class WaypointHandler extends XMLMappingHandler {
 	XMLStringHandler eleHandler = new XMLStringHandler();
 	XMLStringHandler timeHandler = new XMLStringHandler();
   XMLStringHandler speedHandler = new XMLStringHandler();
+  XMLStringHandler bearingHandler = new XMLStringHandler();
 	List<String> links = new ArrayList<String>();
 	XMLStringHandler linkHandler = new StringListHandler(links);
 	Waypoint waypoint;
@@ -35,6 +36,7 @@ class WaypointHandler extends XMLMappingHandler {
 		XMLMappingHandler extensions = new XMLMappingHandler();
 		setHandler(GPX.EXTENSIONS, extensions );
 		extensions.setHandler( GPX.SPEED, speedHandler );
+    extensions.setHandler( GPX.COURSE, bearingHandler );
 	}
 
 	private float getFloat( XMLStringHandler stringHandler ) {
@@ -64,6 +66,7 @@ class WaypointHandler extends XMLMappingHandler {
 		waypoint.type = typeHandler.getText();
 		waypoint.elevation = getFloat(eleHandler);
     waypoint.speed= getFloat(speedHandler);
+    waypoint.bearing= getFloat(bearingHandler);
 		waypoint.time = GPX.parseDate(timeHandler.getText());
 		if ( links.size() != 0 ) {
 			waypoint.setLinks(Arrays.asList(links.toArray(new String[links.size()])));
