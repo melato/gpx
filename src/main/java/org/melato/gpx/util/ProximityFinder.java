@@ -30,6 +30,12 @@ public class ProximityFinder {
     target = d;
   }
   
+  
+  public Metric getMetric() {
+    return metric;
+  }
+
+
   public void setPath(Path path) {
     waypoints = path.getWaypoints();
     lengths = path.getLengths();
@@ -39,6 +45,9 @@ public class ProximityFinder {
     setPath(new Path(waypoints));
   }
 
+  public Waypoint[] getWaypoints() {
+    return waypoints;
+  }
 
   /**
    * Determine if the query waypoint q, is near the subsequence between indexes i1, i2 (inclusive).
