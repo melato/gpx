@@ -64,6 +64,13 @@ public class Point {
 		return ((float) (p2.time.getTime() - p1.time.getTime())) / 1000;
 	}
 	
+  /** Return the time difference between two points, in milliseconds. */
+  public static long timeDifferenceMillis(Point p1, Point p2) {
+    if ( p1.time == null || p2.time == null)
+      return 0;
+    return p2.time.getTime() - p1.time.getTime();
+  }
+  
   public void setTime(long time) {
     this.time = new Date(time);
   }
