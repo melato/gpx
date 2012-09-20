@@ -3,6 +3,8 @@ package org.melato.gpx;
 import java.util.Collections;
 import java.util.List;
 
+import org.melato.util.DelegateList;
+
 /** A GPX waypoint:  geographical point with annotations. */
 public class Waypoint extends Point {
 	public String	name;
@@ -90,5 +92,9 @@ public class Waypoint extends Point {
 			buf.append( " desc=" + desc );
 		}
 		return buf.toString();
+	}
+	
+	public static List<Point> asPoints(List<Waypoint> waypoints) {
+	  return new DelegateList<Waypoint,Point>(waypoints);
 	}
 }
