@@ -71,8 +71,8 @@ public class GPXXmlWriter extends GPXSerializer {
 		write( xml, GPX.NAME, p.getName() );
 		write( xml, GPX.DESC, p.getDesc() );
     write( xml, GPX.SYM, p.getSym() );
-		if ( p.getTime() != null )
-		  write( xml, GPX.TIME, formatDate(p.getTime()));
+		if ( p.hasTime() )
+		  write( xml, GPX.TIME, formatDate(p.getDate()));
 		for( String link: p.getLinks() ) {
 		  write( xml, GPX.LINK, link );
 		}

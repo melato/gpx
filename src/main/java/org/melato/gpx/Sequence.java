@@ -48,15 +48,13 @@ public class Sequence implements Cloneable {
 			return 0;
 		Waypoint p1 = waypoints.get(0);
 		Waypoint p2 = waypoints.get(waypoints.size()-1);
-		if ( p1.time == null || p2.time == null )
-			return 0;
-		return (int) (p2.time.getTime()-p1.time.getTime())/1000;
+		return (int) (Point.timeDifferenceMillis(p1,  p2)/1000);
 	}
 	
 	public Date startTime() {
 		if ( waypoints.size() == 0 )
 			return null;
-		return waypoints.get(0).time;		
+		return waypoints.get(0).getDate();		
 	}
 
 	/** Return the duration in seconds */

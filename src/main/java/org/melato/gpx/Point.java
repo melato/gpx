@@ -8,7 +8,7 @@ public class Point {
 	public float	lon;
 	/** GPX uses the term elevation, rather than altitude. */
 	public float elevation = Float.NaN;
-	public Date		time;
+	public long		time;
 	public float speed = Float.NaN;
 	public float bearing = Float.NaN;
 	
@@ -53,29 +53,39 @@ public class Point {
   public void setBearing(float bearing) {
     this.bearing = bearing;
   }
-  public Date getTime() {
+  public long getTime() {
 		return time;
 	}
+  
+  public boolean hasTime() {
+    return time != 0;
+  }
+  
+  public Date getDate() {
+    if ( time == 0 )
+      return null;
+    return new Date(time);
+  }
 
 	/** Return the time difference between two points, in seconds. */
 	public static float timeDifference(Point p1, Point p2) {
-		if ( p1.time == null || p2.time == null)
+		if ( p1.time == 0 || p2.time == 0)
 			return 0;
-		return ((float) (p2.time.getTime() - p1.time.getTime())) / 1000;
+		return ((float) (p2.time - p1.time)) / 1000;
 	}
 	
   /** Return the time difference between two points, in milliseconds. */
   public static long timeDifferenceMillis(Point p1, Point p2) {
-    if ( p1.time == null || p2.time == null)
+    if ( p1.time == 0 || p2.time == 0)
       return 0;
-    return p2.time.getTime() - p1.time.getTime();
+    return p2.time - p1.time;
   }
   
   public void setTime(long time) {
-    this.time = new Date(time);
+    this.time = time;
   }
 	public void setTime(Date time) {
-		this.time = time;
+		this.time = time.getTime();
 	}
 	public Point(){}
 	public Point(float lat, float lon) {
@@ -83,7 +93,7 @@ public class Point {
 		this.lat = lat;
 		this.lon = lon;
 	}
-	public Point(float lat, float lon, float elevation, Date time) {
+	public Point(float lat, float lon, float elevation, long time) {
 		super();
 		this.lat = lat;
 		this.lon = lon;

@@ -124,17 +124,23 @@ public class GPX {
 	static TimeZone utc = TimeZone.getTimeZone( "GMT" );
 	static Pattern datePattern = Pattern.compile( "([0-9]{4})-([0-9]{1,2})-([0-9]{1,2})T([0-9]{1,2}):([0-9]{2}):([0-9\\.]*)(Z?)");
 
+  public static Date parseDate(String s) {
+    long time = parseTime(s);
+    if ( time != 0 )
+      return new Date(time);
+    return null;
+  }
 	/**
 	 * Parse a GPX date (ISO 8601). 
 	 * Example:  2011-09-25T10:17:37Z
 	 * @param s
 	 */
-	public static Date parseDate(String s) {
+	public static long parseTime(String s) {
 		if ( s == null )
-			return null;
+			return 0;
 		s = s.trim();
 		if ( s.length() == 0 )
-			return null;
+			return 0;
 		Matcher matcher = datePattern.matcher(s);
 		if ( matcher.matches() ) {
 			int year = Integer.parseInt( matcher.group(1));
@@ -151,7 +157,7 @@ public class GPX {
 			}
 			long time = calendar.getTimeInMillis();
 			time += millisecond;
-			return new Date(time);
+			return time;
 		}
 		throw new IllegalArgumentException( "Invalid date: " + s );
 	}
