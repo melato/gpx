@@ -1,10 +1,12 @@
 package org.melato.gpx;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /** A point in GPX spacetime (latitude, longitude, elevation, time) */
-public class Point {
-	public float	lat;
+public class Point implements Serializable {
+  private static final long serialVersionUID = 1L;
+  public float	lat;
 	public float	lon;
 	/** GPX uses the term elevation, rather than altitude. */
 	public float elevation = Float.NaN;
