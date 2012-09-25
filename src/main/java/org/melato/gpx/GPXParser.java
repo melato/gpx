@@ -31,12 +31,15 @@ public class GPXParser {
 			InputStream input = new FileInputStream( file );
 			return parse(input);
 		} catch( IOException e ) {
-			throw new IOException( "Cannot parse " + file, e );
+			throw exception( file, e );
 		} catch( RuntimeException e ) {
-			throw new IOException( "Cannot parse " + file, e );
+      throw exception( file, e );
 		}
 	}
 	
+	private IOException exception( Object file, Exception e ) {
+    return new IOException( "Cannot parse " + file + " exception=" + e );
+	}
 	/**
 	 * Parse a file from a URL
 	 * @param url
@@ -48,9 +51,9 @@ public class GPXParser {
       InputStream input = url.openStream();
       return parse(input);
     } catch( IOException e ) {
-      throw new IOException( "Cannot parse " + url, e );
+      throw exception( url, e );
     } catch( RuntimeException e ) {
-      throw new IOException( "Cannot parse " + url, e );
+      throw exception( url, e );
     }
   }
 
