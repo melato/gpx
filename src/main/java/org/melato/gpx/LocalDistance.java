@@ -1,5 +1,8 @@
 package org.melato.gpx;
 
+import org.melato.gps.Earth;
+import org.melato.gps.Point;
+
 /** A faster distance computation that is accurate near a particular reference point.
  * It is 6 times faster than GlobalDistance
  * A rough measurement shows it to be accurate within about 10 cm for distances ~ 10 Km for latitude 38.

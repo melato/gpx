@@ -2,8 +2,8 @@ package org.melato.gpx.util;
 
 import java.util.List;
 
+import org.melato.gps.Point;
 import org.melato.gpx.GPX;
-import org.melato.gpx.Point;
 import org.melato.gpx.Route;
 import org.melato.gpx.Sequence;
 import org.melato.gpx.Track;

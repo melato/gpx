@@ -5,7 +5,7 @@ import java.util.List;
 
 import org.junit.Assert;
 import org.junit.Test;
-import org.melato.gpx.Earth;
+import org.melato.gps.Earth;
 import org.melato.gpx.Waypoint;
 import org.melato.gpx.util.ProximityFinder;
 

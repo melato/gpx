@@ -3,9 +3,9 @@ package org.melato.gpx.util;
 import java.util.Arrays;
 import java.util.List;
 
+import org.melato.gps.Point;
 import org.melato.gpx.GlobalDistance;
 import org.melato.gpx.Metric;
-import org.melato.gpx.Point;
 import org.melato.gpx.Waypoint;
 
 /**

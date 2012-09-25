@@ -4,6 +4,9 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
+import org.melato.gps.Earth;
+import org.melato.gps.Point;
+
 /**
  * A sequence of waypoints.  May be used for track segments, routes, etc.
  */

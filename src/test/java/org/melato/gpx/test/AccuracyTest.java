@@ -3,8 +3,8 @@ package org.melato.gpx.test;
 import junit.framework.Assert;
 
 import org.junit.Test;
-import org.melato.gpx.Earth;
-import org.melato.gpx.Point;
+import org.melato.gps.Earth;
+import org.melato.gps.Point;
 
 /** Verify that we're using adequate data representations for accurate computations.
  */

@@ -1,5 +1,8 @@
 package org.melato.gpx;
 
+import org.melato.gps.Earth;
+import org.melato.gps.Point;
+
 
 public class GlobalDistance implements Metric {
 

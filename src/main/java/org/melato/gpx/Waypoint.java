@@ -3,6 +3,7 @@ package org.melato.gpx;
 import java.util.Collections;
 import java.util.List;
 
+import org.melato.gps.Point;
 import org.melato.util.DelegateList;
 
 /** A GPX waypoint:  geographical point with annotations. */
