@@ -57,15 +57,10 @@ public class Waypoint extends Point {
 		super(lat, lon);
 	}
   public Waypoint(Point p) {
-    this(p.lat, p.lon );
-    elevation = p.elevation;
-    time = p.time;
-    speed = p.speed;
+    super(p);
   }
 	public Waypoint(Waypoint p) {
-		this(p.lat, p.lon );
-		elevation = p.elevation;
-		time = p.time;
+		super(p);
 		sym = p.sym;
 		name = p.name;
 		desc = p.desc;
