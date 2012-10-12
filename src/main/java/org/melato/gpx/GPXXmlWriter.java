@@ -10,16 +10,23 @@ import org.melato.xml.XMLWriter;
 
 /** Writes gpx data to gpx (XML) files. */
 public class GPXXmlWriter extends GPXSerializer {
-	DateFormat format;
-	XMLWriter xml;
-	String waypointTag = GPX.WPT;
+	private DateFormat format;
+	private XMLWriter xml;
+	private String waypointTag = GPX.WPT;
   protected int waypointCount = 0;
+  
+	public void setXmlWriter(XMLWriter xml) {
+    this.xml = xml;
+  }
 
-
-	public GPXXmlWriter(XMLWriter xml) {
-		format = new SimpleDateFormat( "yyyy-MM-dd'T'HH:mm:ss");
-		format.setTimeZone(TimeZone.getTimeZone("GMT"));
-		this.xml = xml;
+  public GPXXmlWriter() {
+    format = new SimpleDateFormat( "yyyy-MM-dd'T'HH:mm:ss");
+    format.setTimeZone(TimeZone.getTimeZone("GMT"));
+  }
+  
+  public GPXXmlWriter(XMLWriter xml) {
+    this();
+		setXmlWriter(xml);
 	}
 	
 	private String formatDate(Date date) {
