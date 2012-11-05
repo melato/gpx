@@ -16,4 +16,5 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *-------------------------------------------------------------------------
  */
+/** Parse gpx files and represent GPX data.  */ 
 package org.melato.gpx;
