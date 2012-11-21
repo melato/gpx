@@ -19,7 +19,7 @@
 package org.melato.gpx;
 
 import org.melato.gps.Earth;
-import org.melato.gps.Point;
+import org.melato.gps.Point2D;
 
 /** A faster distance computation that is accurate near a particular reference point.
  * It is 6 times faster than GlobalDistance
@@ -30,13 +30,13 @@ public class LocalDistance implements Metric {
   private float latScale;
   private float lonScale;
   
-  public LocalDistance(Point reference) {
+  public LocalDistance(Point2D reference) {
     latScale = Earth.metersPerDegreeLatitude();
     lonScale = Earth.metersPerDegreeLongitude(reference.getLat());
   }
 
   @Override
-  public float distance(Point p1, Point p2) {
+  public float distance(Point2D p1, Point2D p2) {
     float x = (p2.getLon() - p1.getLon()) * lonScale;
     float y = (p2.getLat() - p1.getLat()) * latScale;    
     return (float) Math.sqrt(x*x + y*y);

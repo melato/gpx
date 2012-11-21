@@ -18,9 +18,9 @@
  */
 package org.melato.gpx;
 
-import org.melato.gps.Point;
+import org.melato.gps.Point2D;
 
 
 public interface Metric {
-  float distance(Point p1, Point p2);
+  float distance(Point2D p1, Point2D p2);
 }

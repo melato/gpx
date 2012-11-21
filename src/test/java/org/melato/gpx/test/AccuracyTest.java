@@ -22,7 +22,7 @@ import junit.framework.Assert;
 
 import org.junit.Test;
 import org.melato.gps.Earth;
-import org.melato.gps.Point;
+import org.melato.gps.Point2D;
 
 /** Verify that we're using adequate data representations for accurate computations.
  */
@@ -43,8 +43,8 @@ public class AccuracyTest {
 		d = d * 2;
 		float lat2 = lat + d;
 		// lat2 is the smallest float that is still greater than lat.
-		Point p1 = new Point(lat, lon);
-		Point p2 = new Point(lat2, lon);
+		Point2D p1 = new Point2D(lat, lon);
+		Point2D p2 = new Point2D(lat2, lon);
 		float minDistance = (float) Earth.distance(p1, p2);
 		// the minimum distance between two different waypoints, using float accuracy.
 		System.out.println( "minDistance: " + minDistance );

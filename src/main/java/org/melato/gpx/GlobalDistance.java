@@ -19,13 +19,13 @@
 package org.melato.gpx;
 
 import org.melato.gps.Earth;
-import org.melato.gps.Point;
+import org.melato.gps.Point2D;
 
 
 public class GlobalDistance implements Metric {
 
   @Override
-  public float distance(Point p1, Point p2) {
+  public float distance(Point2D p1, Point2D p2) {
     return Earth.distance(p1, p2);
   }
 

@@ -23,10 +23,9 @@ import java.util.Date;
 import java.util.List;
 
 import org.melato.gps.Earth;
-import org.melato.gps.Point;
-
-/**
- * A sequence of waypoints.  May be used for track segments, routes, etc.
+import org.melato.gps.Point2D;
+import org.melato.gps.PointTime;
+/** A sequence of waypoints.  May be used for track segments, routes, etc.
  */
 public class Sequence implements Cloneable {
 	List<Waypoint> waypoints;
@@ -69,7 +68,7 @@ public class Sequence implements Cloneable {
 			return 0;
 		Waypoint p1 = waypoints.get(0);
 		Waypoint p2 = waypoints.get(waypoints.size()-1);
-		return (int) (Point.timeDifferenceMillis(p1,  p2)/1000);
+		return (int) (PointTime.timeDifferenceMillis(p1,  p2)/1000);
 	}
 	
 	public Date startTime() {
@@ -89,7 +88,7 @@ public class Sequence implements Cloneable {
 	 * @param center
 	 * @return
 	 */
-	public boolean isOutgoing(Point center) {
+	public boolean isOutgoing(Point2D center) {
 		int n = waypoints.size();
 		if ( n == 0 )
 			return false;

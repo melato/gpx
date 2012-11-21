@@ -21,11 +21,12 @@ package org.melato.gpx;
 import java.util.Collections;
 import java.util.List;
 
-import org.melato.gps.Point;
-import org.melato.util.DelegateList;
+import org.melato.gps.GpsPoint;
+import org.melato.gps.Point2D;
+import org.melato.gps.PointTime;
 
 /** A GPX waypoint:  geographical point with annotations. */
-public class Waypoint extends Point {
+public class Waypoint extends GpsPoint {
 	public String	name;
 	public String	desc;
 	public String	type;
@@ -33,7 +34,7 @@ public class Waypoint extends Point {
 	public List<String> links = emptyLinks;
 
 	private static List<String> emptyLinks = Collections.emptyList();
-	
+
 	public String getName() {
 		return name;
 	}
@@ -74,7 +75,10 @@ public class Waypoint extends Point {
 	public Waypoint(float lat, float lon) {
 		super(lat, lon);
 	}
-  public Waypoint(Point p) {
+  public Waypoint(Point2D p) {
+    super(p);
+  }
+  public Waypoint(PointTime p) {
     super(p);
   }
 	public Waypoint(Waypoint p) {
@@ -106,9 +110,5 @@ public class Waypoint extends Point {
 			buf.append( " desc=" + desc );
 		}
 		return buf.toString();
-	}
-	
-	public static List<Point> asPoints(List<Waypoint> waypoints) {
-	  return new DelegateList<Waypoint,Point>(waypoints);
-	}
+	}	
 }

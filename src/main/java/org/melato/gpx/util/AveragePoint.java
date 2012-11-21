@@ -20,7 +20,7 @@ package org.melato.gpx.util;
 
 import java.util.List;
 
-import org.melato.gps.Point;
+import org.melato.gps.Point2D;
 import org.melato.gpx.GPX;
 import org.melato.gpx.Route;
 import org.melato.gpx.Sequence;
@@ -31,20 +31,20 @@ public class AveragePoint {
 	private int	pointCount = 0;
 	private double latSum = 0;
 	private double lonSum = 0;
-	public void add(Point p) {
+	public void add(Point2D p) {
 		pointCount++;
 		latSum += p.lat;
 		lonSum += p.lon;
 	}
-	public Point getCenter() {
+	public Point2D getCenter() {
 		if ( pointCount == 0 )
 			return null;
 		float lat = (float) (latSum/pointCount);
 		float lon = (float) (lonSum/pointCount);
-		return new Point(lat, lon);
+		return new Point2D(lat, lon);
 	}
   public void add(List<Waypoint> list) {
-    for( Point p: list ) {
+    for( Point2D p: list ) {
       add(p);
     }
   }
@@ -52,7 +52,7 @@ public class AveragePoint {
 	  add( seq.getWaypoints() );
 	}
 	
-	public static Point getCenter(GPX gpx) {
+	public static Point2D getCenter(GPX gpx) {
 	  AveragePoint mean = new AveragePoint();
 	  mean.add(gpx.getWaypoints());
     for( Route route: gpx.getRoutes() ) {
