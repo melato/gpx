@@ -39,7 +39,7 @@ public class Path {
   protected float[]   lengths;
   
   public Path() {
-    setWaypoints( new Waypoint[0] );
+    setWaypoints( new PointTime[0] );
   }
   
   public Metric getMetric() {
@@ -48,16 +48,17 @@ public class Path {
 
   public Path(Metric metric) {
     this.metric = metric;
-    setWaypoints( new Waypoint[0] );
+    setWaypoints( new PointTime[0] );
+  }
+  
+  public Path(PointTime[] waypoints) {
+    setWaypoints(waypoints);
   }
   
   public Path(List<Waypoint> waypoints) {
-    setWaypoints(waypoints);
+    setWaypoints(waypoints.toArray(new PointTime[waypoints.size()]));
   }
   
-  public Path(Waypoint[] waypoints) {
-    setWaypoints(waypoints);
-  }
   public int size() {
     return lengths.length;
   }  
@@ -81,11 +82,6 @@ public class Path {
   }
   
 
-  public void setWaypoints(List<Waypoint> waypoints) {
-    setWaypoints(waypoints.toArray(new Waypoint[waypoints.size()]));
-  }
-  
-  
   public PointTime[] getWaypoints() {
     return waypoints;
   }
