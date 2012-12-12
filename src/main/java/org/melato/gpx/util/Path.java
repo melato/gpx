@@ -164,7 +164,7 @@ public class Path {
       return -1;
     if ( position < 0 )
       return 0;
-    if ( position > lengths.length )
+    if ( position > lengths[lengths.length-1] )
       return size() - 1;
     int pos = Arrays.binarySearch(lengths, position);
     if ( pos >= 0 ) {
