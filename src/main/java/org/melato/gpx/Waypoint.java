@@ -103,9 +103,6 @@ public class Waypoint extends GpsPoint {
     if ( sym != null ) {
       buf.append( " sym=" + sym );
     }
-		if ( name != null ) {
-			buf.append( " name=" + name );
-		}
 		if ( desc != null ) {
 			buf.append( " desc=" + desc );
 		}
