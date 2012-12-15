@@ -27,7 +27,8 @@ import org.melato.gps.PointTime;
 
 /** A GPX waypoint:  geographical point with annotations. */
 public class Waypoint extends GpsPoint {
-	public String	name;
+  private static final long serialVersionUID = 1L;
+  public String	name;
 	public String	desc;
 	public String	type;
   public String sym;
