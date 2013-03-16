@@ -93,5 +93,13 @@ public class GPXParserTest {
      builder.addGPX(gpx);
      gpx = builder.getGpx();
    }
+   
+   public @Test void parseRteTrack() throws IOException {
+     InputStream input = getClass().getResourceAsStream("rtetrack.gpx");
+     GPXParser parser = new GPXParser();
+     GPX gpx = parser.parse(input);
+     Assert.assertEquals( 1, gpx.getTracks().size());
+     Assert.assertEquals( 1, gpx.getRoutes().size());
+   }
 
 }

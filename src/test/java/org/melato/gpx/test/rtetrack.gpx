@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<gpx version="1.1" creator="melato.org - http://melato.org" xmlns="http://www.topografix.com/GPX/1/1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.topografix.com/GPX/1/1 http://www.topografix.com/GPX/1/1/gpx.xsd">
+<rte>
+<name>421</name>
+<rtept lat="38.03541" lon="23.71778">
+<ele>120.1</ele>
+<name>421</name>
+<time>2013-03-15T12:21:36Z</time></rtept>
+<rtept lat="38.03176" lon="23.736671">
+<ele>134.4</ele>
+<name></name>
+<time>2013-03-15T12:38:31Z</time></rtept>
+</rte>
+<trk>
+<name>421</name>
+
+<trkseg>
+<trkpt lat="38.03541" lon="23.71778">
+<ele>120.1</ele>
+<time>2013-03-15T12:21:36Z</time></trkpt>
+</trkseg>
+
+<trkseg>
+<trkpt lat="38.03868" lon="23.760082">
+<ele>159.7</ele>
+<time>2013-03-15T12:49:29Z</time></trkpt>
+<trkpt lat="38.02978" lon="23.779722">
+<ele>183.8</ele>
+<time>2013-03-15T12:55:41Z</time></trkpt>
+</trkseg>
+
+<trkseg>
+<trkpt lat="38.02971" lon="23.779795">
+<ele>183.7</ele>
+<time>2013-03-15T12:55:42Z</time></trkpt>
+<trkpt lat="38.01331" lon="23.821882">
+<ele>243.4</ele>
+<time>2013-03-15T13:14:08Z</time></trkpt>
+</trkseg></trk></gpx>
