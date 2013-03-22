@@ -74,6 +74,13 @@ class WaypointHandler extends XMLMappingHandler {
 		float lon = getFloat(tag, GPX.LON);
 		waypoint = new Waypoint(lat, lon);
 		waypoints.add(waypoint);
+    links.clear();
+    symHandler.clear();
+    nameHandler.clear();
+    descHandler.clear();
+    typeHandler.clear();
+    eleHandler.clear();
+    timeHandler.clear();
 	}
 
 	@Override
@@ -89,12 +96,6 @@ class WaypointHandler extends XMLMappingHandler {
 		if ( links.size() != 0 ) {
 			waypoint.setLinks(Arrays.asList(links.toArray(new String[links.size()])));
 		}
-		links.clear();
-		nameHandler.clear();
-		descHandler.clear();
-		typeHandler.clear();
-		eleHandler.clear();
-		timeHandler.clear();
 	}
 
 	static float getFloat(XMLTag tag, String attribute) {
