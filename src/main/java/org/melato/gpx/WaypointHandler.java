@@ -23,6 +23,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
+import org.melato.util.Iso8106Date;
 import org.melato.xml.XMLMappingHandler;
 import org.melato.xml.XMLStringHandler;
 import org.melato.xml.XMLTag;
@@ -92,7 +93,7 @@ class WaypointHandler extends XMLMappingHandler {
 		waypoint.elevation = getFloat(eleHandler);
     waypoint.speed= getFloat(speedHandler);
     waypoint.bearing= getFloat(bearingHandler);
-		waypoint.setTime(GPX.parseTime(timeHandler.getText()));
+		waypoint.setTime(Iso8106Date.parseTime(timeHandler.getText()));
 		if ( links.size() != 0 ) {
 			waypoint.setLinks(Arrays.asList(links.toArray(new String[links.size()])));
 		}
