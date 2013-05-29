@@ -32,9 +32,23 @@ public class Waypoint extends GpsPoint {
 	public String	desc;
 	public String	type;
   public String sym;
-	public List<String> links = emptyLinks;
+	public List<Link> links = emptyLinks;
 
-	private static List<String> emptyLinks = Collections.emptyList();
+	public static class Link {
+	  public String type;
+	  public String text;
+	  
+    public Link() {
+      super();
+    }
+
+    public Link(String type, String text) {
+      super();
+      this.type = type;
+      this.text = text;
+    }	  
+	}
+	private static List<Link> emptyLinks = Collections.emptyList();
 
 	public String getName() {
 		return name;
@@ -53,13 +67,13 @@ public class Waypoint extends GpsPoint {
 	public void setType(String type) {
 		this.type = type;
 	}
-	public List<String> getLinks() {
+	public List<Link> getLinks() {
 		return links;
 	}
 	public String getLink() {
-		return links.isEmpty() ? null : links.get(0);
+		return links.isEmpty() ? null : links.get(0).text;
 	}
-	public void setLinks(List<String> links) {
+	public void setLinks(List<Link> links) {
 		this.links = links;
 	}
 	public void setDesc(String desc) {

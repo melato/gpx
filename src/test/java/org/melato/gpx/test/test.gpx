@@ -8,8 +8,10 @@
   <wpt lat="1.1" lon="2.1">
          <name>P1</name>
          <desc>Waypoint One</desc>
+         <link>
          <type>link1</type>
-         <link>link1</link>
+         <text>link1</text>
+         </link>
   </wpt>
      
    <rte>

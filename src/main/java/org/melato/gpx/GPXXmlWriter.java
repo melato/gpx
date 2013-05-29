@@ -24,6 +24,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.TimeZone;
 
+import org.melato.gpx.Waypoint.Link;
 import org.melato.xml.XMLWriter;
 
 /** Writes gpx data to gpx (XML) files. */
@@ -98,8 +99,12 @@ public class GPXXmlWriter extends GPXSerializer {
     write( xml, GPX.SYM, p.getSym() );
 		if ( p.hasTime() )
 		  write( xml, GPX.TIME, formatDate(p.getDate()));
-		for( String link: p.getLinks() ) {
-		  write( xml, GPX.LINK, link );
+		for( Link link: p.getLinks() ) {
+		  xml.println();
+		  xml.tagOpen(GPX.LINK);
+		  write( xml, GPX.TYPE, link.type );
+      write( xml, GPX.TEXT, link.text );
+		  xml.tagEnd(GPX.LINK);
 		}
 		xml.tagEnd(waypointTag);
 		return true;

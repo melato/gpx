@@ -38,6 +38,7 @@ public class GPX {
   public static final String SYM = "sym";
 	public static final String LINK = "link";
 	public static final String TYPE = "type";
+  public static final String TEXT = "text";
 
 	public static final String LAT = "lat";
 	public static final String LON = "lon";
