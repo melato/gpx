@@ -16,30 +16,29 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *-------------------------------------------------------------------------
  */
-package org.melato.gpx;
+package org.melato.gpx.test;
 
-import java.io.File;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStream;
 
-import org.melato.xml.XMLWriter;
+import org.junit.Test;
+import org.melato.gpx.GPX;
+import org.melato.gpx.GPXParser;
+import org.melato.gpx.GPXWriter;
 
-/** Writes gpx data to gpx (XML) files. */
-public class GPXWriter {
-  private void write( GPX gpx, XMLWriter xml ) throws IOException {
-    try {
-      xml.printHeader();
-      GPXSerializer writer = new GPXXmlWriter(xml);
-      writer.addGPX(gpx);
-    } finally {
-      xml.close();
-    }
-  }
-	public void write( GPX gpx, File file ) throws IOException {
-		write( gpx, new XMLWriter( file ) );
-	}
-  public void write( GPX gpx, OutputStream stream ) throws IOException {
-    write( gpx, new XMLWriter( stream ) );
-  }
+public class GPXWriterTest {
+   
+   public @Test void write() throws IOException {
+     InputStream input = getClass().getResourceAsStream("test.gpx");
+     GPXParser parser = new GPXParser();
+     GPX gpx = parser.parse(input);
+     GPXWriter writer = new GPXWriter();
+     OutputStream out = new ByteArrayOutputStream();
+     writer.write(gpx, out);
+     String s = out.toString();
+     System.out.println(s);
+   }
 
 }

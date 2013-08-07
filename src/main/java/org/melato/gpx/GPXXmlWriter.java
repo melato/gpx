@@ -27,12 +27,18 @@ import java.util.TimeZone;
 import org.melato.gpx.Waypoint.Link;
 import org.melato.xml.XMLWriter;
 
-/** Writes gpx data to gpx (XML) files. */
+/** Writes gpx data to gpx (XML) files.
+ * Newline Formatting:
+ *    before each tag
+ *    before each closing tag, if there are inner tags.
+ *    after the last tag.
+ * */
 public class GPXXmlWriter extends GPXSerializer {
 	private DateFormat format;
 	private XMLWriter xml;
 	private String waypointTag = GPX.WPT;
   protected int waypointCount = 0;
+  private boolean innerTags;
   
 	public void setXmlWriter(XMLWriter xml) {
     this.xml = xml;
@@ -62,6 +68,7 @@ public class GPXXmlWriter extends GPXSerializer {
 	private void write( XMLWriter xml, String tag, String text ) {
 		if ( text == null )
 			return;
+		innerTags = true;
     xml.println();
 		xml.tagOpen(tag);
 		xml.text(text);
@@ -77,6 +84,7 @@ public class GPXXmlWriter extends GPXSerializer {
   @Override
 	public boolean add(Waypoint p ) {
 	  waypointCount++;
+    innerTags = false;
     xml.println();
 		xml.tagOpen(waypointTag, false);
 		xml.tagAttribute( "lat", String.valueOf(p.getLat()) );
@@ -104,7 +112,11 @@ public class GPXXmlWriter extends GPXSerializer {
 		  xml.tagOpen(GPX.LINK);
 		  write( xml, GPX.TYPE, link.type );
       write( xml, GPX.TEXT, link.text );
+      xml.println();
 		  xml.tagEnd(GPX.LINK);
+		}
+		if ( innerTags ) {
+		  xml.println();
 		}
 		xml.tagEnd(waypointTag);
 		return true;
@@ -120,19 +132,19 @@ public class GPXXmlWriter extends GPXSerializer {
     xml.tagAttribute( "xmlns:xsi", "http://www.w3.org/2001/XMLSchema-instance");
     xml.tagAttribute( "xsi:schemaLocation", "http://www.topografix.com/GPX/1/1 http://www.topografix.com/GPX/1/1/gpx.xsd");
     xml.tagClose();
-    xml.println();
 	}
 
 	@Override
   public void closeGpx() {
+    xml.println();    
     xml.tagEnd(GPX.GPX);
-    xml.println();
-    
+    xml.println();    
     xml.close();    
   }
 	
   @Override
   public void openRoute(Route route) {
+    xml.println();
     xml.tagOpen(GPX.RTE);
     write(xml, GPX.NAME, route.getName()); 
     waypointTag = GPX.RTEPT;
@@ -140,12 +152,14 @@ public class GPXXmlWriter extends GPXSerializer {
   
   @Override
   public void closeRoute() {
+    xml.println();
     xml.tagEnd(GPX.RTE);
     waypointTag = GPX.WPT;
   }
   
   @Override
   public void openTrack(Track track) {
+    xml.println();
     xml.tagOpen(GPX.TRK);
     write(xml, GPX.NAME, track.getName()); 
     write(xml, GPX.DESC, track.getDesc()); 
@@ -153,12 +167,14 @@ public class GPXXmlWriter extends GPXSerializer {
   
   @Override
   public void closeTrack() {
+    xml.println();
     xml.tagEnd(GPX.TRK);
     waypointTag = GPX.WPT;
   }
   
   @Override
   public void openSegment() {
+    xml.println();
     xml.tagOpen(GPX.TRKSEG);
     waypointTag = GPX.TRKPT;
   }
