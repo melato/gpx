@@ -23,7 +23,6 @@ import java.util.Date;
 import java.util.List;
 
 import org.melato.gps.Earth;
-import org.melato.gps.Point2D;
 import org.melato.gps.PointTime;
 /** A sequence of waypoints.  May be used for track segments, routes, etc.
  */
@@ -81,19 +80,6 @@ public class Sequence implements Cloneable {
   public int duration() {
     return duration( waypoints );
   }
-	/**
-	 * Return true if the route goes away from the center.
-	 * A route is outgoing if the distance between the center and the end of the route
-	 * is greater than the distance between the center and the start of the route.
-	 * @param center
-	 * @return
-	 */
-	public boolean isOutgoing(Point2D center) {
-		int n = waypoints.size();
-		if ( n == 0 )
-			return false;
-		return Earth.distance(center,  waypoints.get(n-1)) > Earth.distance(center,  waypoints.get(0));
-	}
 	
 	public void reverse() {
 	  Collections.reverse(waypoints);
