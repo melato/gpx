@@ -55,15 +55,14 @@ public class AccuracyTest {
     // (perhaps 2 millimeters because longitudes can be twice as large (180
     // degrees).
   }
-  void checkAccuracyLon(float lat) {
-    float lon = 179f;
+  void checkAccuracyLon(float lat, float lon) {
     float lon2 = nextFloat(lon);
     Point2D p1 = new Point2D(lat, lon);
     Point2D p2 = new Point2D(lat, lon2);
     float minDistance = (float) Earth.distance(p1, p2);
     // the minimum distance between two different points, using float
     // accuracy.
-    System.out.println("lat=" + lat + " lon accuracy=" + minDistance);
+    System.out.println("lat=" + lat + " lon=" + lon + " accuracy=" + minDistance);
     Assert.assertTrue(minDistance < 2f);
     // We can compute distances less than one meter, using float latitude.
     // We could also test for longitude, but I'm assuming it would be similar
@@ -74,9 +73,10 @@ public class AccuracyTest {
   public @Test void floatAccuracy() {
     checkAccuracyLat(89);
     checkAccuracyLat(38);
-    checkAccuracyLon(89);
-    checkAccuracyLon(38);
-    checkAccuracyLon(0);
+    checkAccuracyLon(89, 179);
+    checkAccuracyLon(38, 179);
+    checkAccuracyLon(38, 24);
+    checkAccuracyLon(0, 179);
   }
 
 }
