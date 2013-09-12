@@ -18,8 +18,7 @@
  */
 package org.melato.gpx.test;
 
-import junit.framework.Assert;
-
+import org.junit.Assert;
 import org.junit.Test;
 import org.melato.gps.Earth;
 import org.melato.gps.Point2D;
@@ -27,32 +26,57 @@ import org.melato.gps.Point2D;
 /** Verify that we're using adequate data representations for accurate computations.
  */
 public class AccuracyTest {
-	
-	/** Verify that a float has plenty of accuracy for storing latitude. */
-	public @Test void floatLatLatitude() {
-		float lat = 89;  // pick a latitude, near the pole
-		float lon = 0f;
-		// find the next float
-		float d = 1;
-		for(int i = 0; i < 100; i++ ) {
-			float lat1 = lat + d;
-			if ( lat1 == lat )
-				break;
-			d = d / 2;
-		}
-		d = d * 2;
-		float lat2 = lat + d;
-		// lat2 is the smallest float that is still greater than lat.
-		Point2D p1 = new Point2D(lat, lon);
-		Point2D p2 = new Point2D(lat2, lon);
-		float minDistance = (float) Earth.distance(p1, p2);
-		// the minimum distance between two different waypoints, using float accuracy.
-		System.out.println( "minDistance: " + minDistance );
-		// It's actually 0.848643
-		Assert.assertTrue( minDistance < 1f );
-		// We can compute distances less than one meter, using float latitude.
-		// We could also test for longitude, but I'm assuming it would be similar
-		// (perhaps 2 millimeters because longitudes can be twice as large (180 degrees).
-	}
-	
+	    
+  static float nextFloat(float f) {
+    // find the next float
+    float d = 1;
+    for (int i = 0; i < 100; i++) {
+      float lat1 = f + d;
+      if (lat1 == f)
+        break;
+      d = d / 2;
+    }
+    d = d * 2;
+    return f + d;
+  }
+  void checkAccuracyLat(float lat) {
+    float lon = 0f;
+    float lat2 = nextFloat(lat);
+    // lat2 is the smallest float that is still greater than lat.
+    Point2D p1 = new Point2D(lat, lon);
+    Point2D p2 = new Point2D(lat2, lon);
+    float minDistance = (float) Earth.distance(p1, p2);
+    // the minimum distance between two different points, using float
+    // accuracy.
+    System.out.println("lat=" + lat + " lat accuracy=" + minDistance);
+    Assert.assertTrue(minDistance < 1f);
+    // We can compute distances less than two meters, using float latitude.
+    // We could also test for longitude, but I'm assuming it would be similar
+    // (perhaps 2 millimeters because longitudes can be twice as large (180
+    // degrees).
+  }
+  void checkAccuracyLon(float lat) {
+    float lon = 179f;
+    float lon2 = nextFloat(lon);
+    Point2D p1 = new Point2D(lat, lon);
+    Point2D p2 = new Point2D(lat, lon2);
+    float minDistance = (float) Earth.distance(p1, p2);
+    // the minimum distance between two different points, using float
+    // accuracy.
+    System.out.println("lat=" + lat + " lon accuracy=" + minDistance);
+    Assert.assertTrue(minDistance < 2f);
+    // We can compute distances less than one meter, using float latitude.
+    // We could also test for longitude, but I'm assuming it would be similar
+    // (perhaps 2 millimeters because longitudes can be twice as large (180
+    // degrees).
+  }
+  /** Verify that a float has plenty of accuracy for storing latitude. */
+  public @Test void floatAccuracy() {
+    checkAccuracyLat(89);
+    checkAccuracyLat(38);
+    checkAccuracyLon(89);
+    checkAccuracyLon(38);
+    checkAccuracyLon(0);
+  }
+
 }
