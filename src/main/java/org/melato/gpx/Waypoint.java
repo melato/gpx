@@ -20,13 +20,15 @@ package org.melato.gpx;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import org.melato.gps.GpsPoint;
 import org.melato.gps.Point2D;
 import org.melato.gps.PointTime;
 
 /** A GPX waypoint:  geographical point with annotations. */
-public class Waypoint extends GpsPoint {
+public class Waypoint extends GpsPoint implements Cloneable {
   private static final long serialVersionUID = 1L;
   public String	name;
 	public String	desc;
@@ -123,4 +125,12 @@ public class Waypoint extends GpsPoint {
 		}
 		return buf.toString();
 	}	
+  public Waypoint clone() {
+    try {
+      Waypoint p = (Waypoint) super.clone();
+      return p;
+    } catch (CloneNotSupportedException ex) {
+      throw new RuntimeException(ex);
+    }
+  }
 }

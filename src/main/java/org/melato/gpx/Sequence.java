@@ -61,19 +61,31 @@ public class Sequence implements Cloneable {
 	  return distance( waypoints );
 	}
 	
-	/** Return the duration in seconds */
-	public static int duration(List<Waypoint> waypoints) {
+	/** Return the duration in milliseconds */
+	public static long durationMillis(List<Waypoint> waypoints) {
 		if ( waypoints.size() < 2 )
 			return 0;
 		Waypoint p1 = waypoints.get(0);
 		Waypoint p2 = waypoints.get(waypoints.size()-1);
-		return (int) (PointTime.timeDifferenceMillis(p1,  p2)/1000);
+		return PointTime.timeDifferenceMillis(p1,  p2);
+	}
+	
+	/** Return the duration in seconds */
+	public static int duration(List<Waypoint> waypoints) {
+    return (int) (durationMillis(waypoints) / 1000);
 	}
 	
 	public Date startTime() {
-		if ( waypoints.size() == 0 )
+		if ( waypoints.isEmpty() )
 			return null;
 		return waypoints.get(0).getDate();		
+	}
+
+	public Date endTime() {
+    int size = waypoints.size();
+		if ( size == 0 )
+			return null;
+		return waypoints.get(size-1).getDate();		
 	}
 
 	/** Return the duration in seconds */
@@ -81,7 +93,12 @@ public class Sequence implements Cloneable {
     return duration( waypoints );
   }
 	
-	public void reverse() {
+  /** Return the duration in milliseconds */
+  public long durationMillis() {
+    return durationMillis( waypoints );
+  }
+	
+	  public void reverse() {
 	  Collections.reverse(waypoints);
 	}
 
