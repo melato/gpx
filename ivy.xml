@@ -10,7 +10,6 @@
     <dependencies>
         <dependency org="org.melato" name="org.melato.xml" rev="latest.integration"/>
         <dependency org="org.melato" name="org.melato.gps" rev="latest.integration"/>
-        <dependency org="org.melato" name="org.melato.util" rev="latest.integration"/>
         <dependency org="org.junit" name="junit" rev="4.4" conf="test->default"/>
     </dependencies>
 </ivy-module>

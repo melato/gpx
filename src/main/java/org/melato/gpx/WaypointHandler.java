@@ -24,7 +24,6 @@ import java.util.Collection;
 import java.util.List;
 
 import org.melato.gpx.Waypoint.Link;
-import org.melato.util.Iso8106Date;
 import org.melato.xml.XMLMappingHandler;
 import org.melato.xml.XMLStringHandler;
 import org.melato.xml.XMLTag;
