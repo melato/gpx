@@ -39,44 +39,36 @@ public class AccuracyTest {
     d = d * 2;
     return f + d;
   }
-  void checkAccuracyLat(float lat) {
-    float lon = 0f;
-    float lat2 = nextFloat(lat);
-    // lat2 is the smallest float that is still greater than lat.
+  
+  /** Check the longitude accuracy at certain coordinates */ 
+  void assertLonAccuracy(float lat, float lon, float error) {
     Point2D p1 = new Point2D(lat, lon);
-    Point2D p2 = new Point2D(lat2, lon);
-    float minDistance = (float) Earth.distance(p1, p2);
-    // the minimum distance between two different points, using float
-    // accuracy.
-    System.out.println("lat=" + lat + " lat accuracy=" + minDistance);
-    Assert.assertTrue(minDistance < 1f);
-    // We can compute distances less than two meters, using float latitude.
-    // We could also test for longitude, but I'm assuming it would be similar
-    // (perhaps 2 millimeters because longitudes can be twice as large (180
-    // degrees).
-  }
-  void checkAccuracyLon(float lat, float lon) {
     float lon2 = nextFloat(lon);
-    Point2D p1 = new Point2D(lat, lon);
     Point2D p2 = new Point2D(lat, lon2);
-    float minDistance = (float) Earth.distance(p1, p2);
-    // the minimum distance between two different points, using float
-    // accuracy.
-    System.out.println("lat=" + lat + " lon=" + lon + " accuracy=" + minDistance);
-    Assert.assertTrue(minDistance < 2f);
-    // We can compute distances less than one meter, using float latitude.
-    // We could also test for longitude, but I'm assuming it would be similar
-    // (perhaps 2 millimeters because longitudes can be twice as large (180
-    // degrees).
+    // the minimum distance between two different points at the same latitude, using float coordinates.
+    float distance = (float) Earth.distance(p1, p2);
+    Assert.assertTrue(distance < error);
+    System.out.println("lat=" + lat + " lon=" + lon + " lonDiff=" + distance);
+  }
+  /** Check the latitude accuracy at certain coordinates */ 
+  void assertLatAccuracy(float lat, float error) {
+    Point2D p1 = new Point2D(lat, 0);
+    float lat2 = nextFloat(lat);
+    Point2D p2 = new Point2D(lat2, 0);
+    // the minimum distance between two different points at the same longitude, using float coordinates.
+    float distance = (float) Earth.distance(p1, p2);
+    Assert.assertTrue(distance < error);
+    System.out.println("lat=" + lat + " latDiff=" + distance);
   }
   /** Verify that a float has plenty of accuracy for storing latitude. */
   public @Test void floatAccuracy() {
-    checkAccuracyLat(89);
-    checkAccuracyLat(38);
-    checkAccuracyLon(89, 179);
-    checkAccuracyLon(38, 179);
-    checkAccuracyLon(38, 24);
-    checkAccuracyLon(0, 179);
+    float e = 2;
+    assertLatAccuracy(0, e);
+    assertLatAccuracy(38, e);
+    assertLatAccuracy(90, e);
+    assertLonAccuracy(38, 180, e);
+    assertLonAccuracy(38, 24, e);
+    assertLonAccuracy(0, 180, e);
   }
 
 }
