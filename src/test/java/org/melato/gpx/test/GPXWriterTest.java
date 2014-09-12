@@ -54,7 +54,7 @@ public class GPXWriterTest {
      Route route = new Route();
      List<Waypoint> waypoints = Collections.emptyList();
      route.path = new Sequence(waypoints);
-     route.setExtensions(new KeyValue[] {
+     route.getExtensions().setValues(new KeyValue[] {
          new KeyValue("a", "1"),
          new KeyValue("b", "2"),
          });
@@ -67,7 +67,7 @@ public class GPXWriterTest {
      gpx = parser.parse(new ByteArrayInputStream(buf.toByteArray()));     
      Assert.assertEquals( 1, gpx.getRoutes().size());
      route = gpx.getRoutes().get(0);
-     KeyValue[] extensions = route.getExtensions();
+     KeyValue[] extensions = route.getExtensions().getValues();
      Assert.assertEquals( 2, extensions.length);
      KeyValue kv = extensions[0];
      Assert.assertEquals("a", kv.getKey());

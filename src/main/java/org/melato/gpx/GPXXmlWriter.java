@@ -141,6 +141,7 @@ public class GPXXmlWriter extends GPXSerializer {
       write(xml, GPX.NAME, name);
       write(xml, GPX.DESC, desc);
       xml.println();
+      writeExtensions(xml, gpx.getExtensions());
       xml.tagEnd(GPX.METADATA);
     }
   }
@@ -153,21 +154,24 @@ public class GPXXmlWriter extends GPXSerializer {
     xml.close();    
   }
 	
-  @Override
-  public void openRoute(Route route) {
-    xml.println();
-    xml.tagOpen(GPX.RTE);
-    write(xml, GPX.NAME, route.getName());
-    KeyValue[] extensions = route.getExtensions();
-    if ( extensions.length > 0 ) {
+  void writeExtensions(XMLWriter xml, Extensions extensions) {
+    KeyValue[] values = extensions.getValues();
+    if ( values.length > 0 ) {
       xml.println();
       xml.tagOpen(GPX.EXTENSIONS);    
-      for(KeyValue kv: route.getExtensions()) {
+      for(KeyValue kv: values) {
         write(xml, kv.getKey(), kv.getValue());      
       }
       xml.println();
       xml.tagEnd(GPX.EXTENSIONS);
     }
+  }
+  @Override
+  public void openRoute(Route route) {
+    xml.println();
+    xml.tagOpen(GPX.RTE);
+    write(xml, GPX.NAME, route.getName());
+    writeExtensions(xml, route.getExtensions());
     waypointTag = GPX.RTEPT;
   }
   

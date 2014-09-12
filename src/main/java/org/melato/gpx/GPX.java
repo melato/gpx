@@ -58,6 +58,7 @@ public class GPX {
 	
 	private String name;
     private String desc;
+    private Extensions extensions = new Extensions();
 	List<Route> routes = new ArrayList<Route>();
 	List<Track> tracks = new ArrayList<Track>();
 	List<Waypoint> waypoints = new ArrayList<Waypoint>();
@@ -179,5 +180,13 @@ public class GPX {
 
   public void setDesc(String desc) {
     this.desc = desc;
+  }
+
+  public Extensions getExtensions() {
+    return extensions;
+  }
+
+  public void setExtensions(Extensions extensions) {
+    this.extensions = extensions;
   }
 }

@@ -110,7 +110,7 @@ public class GPXParserTest {
      GPX gpx = parser.parse(input);
      Assert.assertEquals( 1, gpx.getRoutes().size());
      Route route = gpx.getRoutes().get(0);
-     KeyValue[] extensions = route.getExtensions();
+     KeyValue[] extensions = route.getExtensions().getValues();
      Assert.assertEquals( 2, extensions.length);
      KeyValue kv = extensions[0];
      Assert.assertEquals("color", kv.getKey());
@@ -118,8 +118,8 @@ public class GPXParserTest {
      kv = extensions[1];
      Assert.assertEquals("fare", kv.getKey());
      Assert.assertEquals("1.20", kv.getValue());
-     Assert.assertEquals("blue",  route.getExtensionValue("color"));
-     Assert.assertEquals("1.20",  route.getExtensionValue("fare"));
+     Assert.assertEquals("blue",  route.getExtensions().getValue("color"));
+     Assert.assertEquals("1.20",  route.getExtensions().getValue("fare"));
    }
    
    public @Test void parseMetadata() throws IOException {
@@ -128,6 +128,7 @@ public class GPXParserTest {
      GPX gpx = parser.parse(input);
      Assert.assertEquals( "a", gpx.getName());
      Assert.assertEquals( "b", gpx.getDesc());
+     Assert.assertEquals("3", gpx.getExtensions().getValue("c"));
    }
    public @Test void writeMetadata() throws IOException {
      GPX gpx = new GPX();

@@ -25,7 +25,7 @@ public class Route implements Cloneable {
   public Sequence path;
   public String name;
   public String label;
-  private KeyValue[] extensions = KeyValue.EMPTY_ARRAY;
+  private Extensions extensions = new Extensions();
   	
   public Route() {
     super();
@@ -81,21 +81,12 @@ public class Route implements Cloneable {
       throw new RuntimeException( e );
     }
   }
-
-  public KeyValue[] getExtensions() {
+  
+  public Extensions getExtensions() {
     return extensions;
   }
 
-  public void setExtensions(KeyValue[] extensions) {
+  public void setExtensions(Extensions extensions) {
     this.extensions = extensions;
-  }  
-  
-  public String getExtensionValue(String key) {
-    for(KeyValue kv: getExtensions()) {
-      if ( key.equals(kv.getKey())) {
-        return kv.getValue();
-      }
-    }
-    return null;    
   }
 }

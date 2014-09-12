@@ -8,5 +8,8 @@
    <metadata>
      <name>a</name>
      <desc>b</desc>
+      <extensions>
+        <c>3</c>
+      </extensions>
    </metadata>     
 </gpx>

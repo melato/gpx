@@ -18,6 +18,7 @@
  */
 package org.melato.gpx;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 import org.melato.xml.XMLElementHandler;
@@ -34,10 +35,13 @@ class KeyValueHandler extends XMLNullHandler {
   public KeyValueHandler(Collection<KeyValue> list) {
     this.list = list;
   }
-  
+  public KeyValueHandler() {
+    this.list = new ArrayList<KeyValue>();
+  }
   @Override
   public void start(XMLTag tag) throws SAXException {
     key = null;
+    list.clear();
   }
 
 
