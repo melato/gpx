@@ -117,6 +117,8 @@ public class GPXParserTest {
      kv = extensions[1];
      Assert.assertEquals("fare", kv.getKey());
      Assert.assertEquals("1.20", kv.getValue());
+     Assert.assertEquals("blue",  route.getExtensionValue("color"));
+     Assert.assertEquals("1.20",  route.getExtensionValue("fare"));
    }
    
 }
