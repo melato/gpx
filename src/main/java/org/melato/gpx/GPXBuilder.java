@@ -44,7 +44,7 @@ public class GPXBuilder extends GPXSerializer {
     return true;
   }
   @Override
-  public void openGpx() {
+  public void openGpx(GPX gpx) {
     gpx = new GPX();
     waypoints = gpx.getWaypoints();
   }

@@ -29,6 +29,7 @@ import org.junit.Test;
 import org.melato.gpx.GPX;
 import org.melato.gpx.GPXBuilder;
 import org.melato.gpx.GPXParser;
+import org.melato.gpx.GPXWriter;
 import org.melato.gpx.GPXXmlWriter;
 import org.melato.gpx.KeyValue;
 import org.melato.gpx.Route;
@@ -119,6 +120,27 @@ public class GPXParserTest {
      Assert.assertEquals("1.20", kv.getValue());
      Assert.assertEquals("blue",  route.getExtensionValue("color"));
      Assert.assertEquals("1.20",  route.getExtensionValue("fare"));
+   }
+   
+   public @Test void parseMetadata() throws IOException {
+     InputStream input = getClass().getResourceAsStream("gpx_metadata.gpx");
+     GPXParser parser = new GPXParser();
+     GPX gpx = parser.parse(input);
+     Assert.assertEquals( "a", gpx.getName());
+     Assert.assertEquals( "b", gpx.getDesc());
+   }
+   public @Test void writeMetadata() throws IOException {
+     GPX gpx = new GPX();
+     gpx.setName("a1");
+     gpx.setDesc("a2");
+     ByteArrayOutputStream buf = new ByteArrayOutputStream();
+     GPXWriter writer = new GPXWriter();
+     writer.write(gpx, buf);
+
+     GPXParser parser = new GPXParser();
+     gpx = parser.parse(new ByteArrayInputStream(buf.toByteArray()));
+     Assert.assertEquals( "a1", gpx.getName());
+     Assert.assertEquals( "a2", gpx.getDesc());
    }
    
 }

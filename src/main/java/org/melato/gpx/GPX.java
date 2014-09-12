@@ -54,7 +54,10 @@ public class GPX {
 	public static final String TRKSEG = "trkseg";
 	public static final String TRKPT = "trkpt";
 	public static final String EXTENSIONS = "extensions";
+    public static final String METADATA = "metadata";
 	
+	private String name;
+    private String desc;
 	List<Route> routes = new ArrayList<Route>();
 	List<Track> tracks = new ArrayList<Track>();
 	List<Waypoint> waypoints = new ArrayList<Waypoint>();
@@ -161,5 +164,20 @@ public class GPX {
     }
     
   }
-	
+
+  public String getName() {
+    return name;
+  }
+
+  public void setName(String name) {
+    this.name = name;
+  }
+
+  public String getDesc() {
+    return desc;
+  }
+
+  public void setDesc(String desc) {
+    this.desc = desc;
+  }
 }

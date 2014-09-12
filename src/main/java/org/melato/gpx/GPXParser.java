@@ -89,12 +89,14 @@ public class GPXParser {
 		List<Waypoint> waypoints = new ArrayList<Waypoint>();
 		WaypointHandler waypointHandler = new WaypointHandler(waypoints);
 		TrackHandler trackHandler = new TrackHandler();
+	    GPX gpx = new GPX();
+		MetadataHandler metadataHandler = new MetadataHandler(gpx);
 		gpxHandler.setHandler( GPX.RTE, routeHandler );
 		gpxHandler.setHandler( GPX.TRK, trackHandler );
 		gpxHandler.setHandler( GPX.WPT, waypointHandler );
+        gpxHandler.setHandler( GPX.METADATA, metadataHandler );
 		try {
 			XMLDelegator.parse( rootHandler, input );
-      GPX gpx = new GPX();
 			gpx.routes = routeHandler.getRoutes();
 			gpx.tracks = trackHandler.getTracks();
 			gpx.waypoints = waypoints;

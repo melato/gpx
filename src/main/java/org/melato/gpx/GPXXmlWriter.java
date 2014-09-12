@@ -123,7 +123,7 @@ public class GPXXmlWriter extends GPXSerializer {
 	}
 
 	@Override
-  public void openGpx() {
+  public void openGpx(GPX gpx) {
     waypointCount = 0;
     xml.tagOpen(GPX.GPX, false);
     xml.tagAttribute( "version", "1.1");
@@ -132,7 +132,18 @@ public class GPXXmlWriter extends GPXSerializer {
     xml.tagAttribute( "xmlns:xsi", "http://www.w3.org/2001/XMLSchema-instance");
     xml.tagAttribute( "xsi:schemaLocation", "http://www.topografix.com/GPX/1/1 http://www.topografix.com/GPX/1/1/gpx.xsd");
     xml.tagClose();
-	}
+    
+    String name = gpx.getName();
+    String desc = gpx.getDesc();
+    if ( name != null || desc != null ) {
+      xml.println();
+      xml.tagOpen(GPX.METADATA);
+      write(xml, GPX.NAME, name);
+      write(xml, GPX.DESC, desc);
+      xml.println();
+      xml.tagEnd(GPX.METADATA);
+    }
+  }
 
 	@Override
   public void closeGpx() {

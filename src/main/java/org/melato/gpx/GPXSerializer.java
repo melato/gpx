@@ -35,7 +35,7 @@ public abstract class GPXSerializer extends AbstractCollection<Waypoint> {
   @Override
   public abstract boolean add(Waypoint p);
   
-  public abstract void openGpx();
+  public abstract void openGpx(GPX gpx);
 
   public abstract void closeGpx();
 
@@ -52,7 +52,7 @@ public abstract class GPXSerializer extends AbstractCollection<Waypoint> {
   public abstract void closeSegment();
 
   public void addGPX( GPX gpx) {
-    openGpx();
+    openGpx(gpx);
     addAll(gpx.getWaypoints() );
     for( Route route: gpx.getRoutes() ) {
       openRoute(route);
