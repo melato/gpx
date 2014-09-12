@@ -31,11 +31,14 @@ class RouteHandler extends XMLMappingHandler {
 	private XMLStringHandler nameHandler = new XMLStringHandler();
 	private	 List<Route> routes = new ArrayList<Route>();
 	private List<Waypoint> waypoints = new ArrayList<Waypoint>();
+	private List<KeyValue> extensions = new ArrayList<KeyValue>();
 	private WaypointHandler waypointHandler = new WaypointHandler(waypoints);
 
 	public RouteHandler() {
 		setHandler( GPX.NAME, nameHandler );
 		setHandler( GPX.RTEPT, waypointHandler);
+		KeyValueHandler extensionHandler = new KeyValueHandler(extensions);
+		setHandler(GPX.EXTENSIONS, extensionHandler);
 	}
 	
 	@Override
@@ -45,6 +48,8 @@ class RouteHandler extends XMLMappingHandler {
 		Waypoint[] array = waypoints.toArray( new Waypoint[0]);
 		route.path = new Sequence(Arrays.asList(array));
 		waypoints.clear();
+		route.setExtensions(extensions.toArray(new KeyValue[0]));
+		extensions.clear();
 		routes.add(route);
 		
 	}

@@ -30,6 +30,7 @@ import org.melato.gpx.GPX;
 import org.melato.gpx.GPXBuilder;
 import org.melato.gpx.GPXParser;
 import org.melato.gpx.GPXXmlWriter;
+import org.melato.gpx.KeyValue;
 import org.melato.gpx.Route;
 import org.melato.gpx.Track;
 import org.melato.gpx.Waypoint;
@@ -102,4 +103,20 @@ public class GPXParserTest {
      Assert.assertEquals( 1, gpx.getRoutes().size());
    }
 
+   public @Test void parseRouteExtensions() throws IOException {
+     InputStream input = getClass().getResourceAsStream("route_extensions.gpx");
+     GPXParser parser = new GPXParser();
+     GPX gpx = parser.parse(input);
+     Assert.assertEquals( 1, gpx.getRoutes().size());
+     Route route = gpx.getRoutes().get(0);
+     KeyValue[] extensions = route.getExtensions();
+     Assert.assertEquals( 2, extensions.length);
+     KeyValue kv = extensions[0];
+     Assert.assertEquals("color", kv.getKey());
+     Assert.assertEquals("blue", kv.getValue());
+     kv = extensions[1];
+     Assert.assertEquals("fare", kv.getKey());
+     Assert.assertEquals("1.20", kv.getValue());
+   }
+   
 }

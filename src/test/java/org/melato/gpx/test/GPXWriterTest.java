@@ -18,15 +18,23 @@
  */
 package org.melato.gpx.test;
 
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.Collections;
+import java.util.List;
 
+import org.junit.Assert;
 import org.junit.Test;
 import org.melato.gpx.GPX;
 import org.melato.gpx.GPXParser;
 import org.melato.gpx.GPXWriter;
+import org.melato.gpx.KeyValue;
+import org.melato.gpx.Route;
+import org.melato.gpx.Sequence;
+import org.melato.gpx.Waypoint;
 
 public class GPXWriterTest {
    
@@ -40,5 +48,29 @@ public class GPXWriterTest {
      String s = out.toString();
      System.out.println(s);
    }
-
+   
+   public @Test void writeRouteExtensions() throws IOException {
+     GPX gpx = new GPX();
+     Route route = new Route();
+     List<Waypoint> waypoints = Collections.emptyList();
+     route.path = new Sequence(waypoints);
+     route.setExtensions(new KeyValue[] {
+         new KeyValue("a", "1"),
+         new KeyValue("b", "2"),
+         });
+     gpx.getRoutes().add(route);
+     ByteArrayOutputStream buf = new ByteArrayOutputStream();
+     GPXWriter writer = new GPXWriter();
+     writer.write(gpx, buf);
+     System.out.println(buf);
+     GPXParser parser = new GPXParser();
+     gpx = parser.parse(new ByteArrayInputStream(buf.toByteArray()));     
+     Assert.assertEquals( 1, gpx.getRoutes().size());
+     route = gpx.getRoutes().get(0);
+     KeyValue[] extensions = route.getExtensions();
+     Assert.assertEquals( 2, extensions.length);
+     KeyValue kv = extensions[0];
+     Assert.assertEquals("a", kv.getKey());
+     Assert.assertEquals("1", kv.getValue());
+   }
 }

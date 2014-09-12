@@ -146,7 +146,17 @@ public class GPXXmlWriter extends GPXSerializer {
   public void openRoute(Route route) {
     xml.println();
     xml.tagOpen(GPX.RTE);
-    write(xml, GPX.NAME, route.getName()); 
+    write(xml, GPX.NAME, route.getName());
+    KeyValue[] extensions = route.getExtensions();
+    if ( extensions.length > 0 ) {
+      xml.println();
+      xml.tagOpen(GPX.EXTENSIONS);    
+      for(KeyValue kv: route.getExtensions()) {
+        write(xml, kv.getKey(), kv.getValue());      
+      }
+      xml.println();
+      xml.tagEnd(GPX.EXTENSIONS);
+    }
     waypointTag = GPX.RTEPT;
   }
   

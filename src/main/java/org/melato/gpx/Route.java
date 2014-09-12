@@ -22,11 +22,11 @@ import java.util.List;
 
 
 public class Route implements Cloneable {
-	public Sequence path;
-	public String name;
+  public Sequence path;
+  public String name;
   public String label;
-  
-	
+  private KeyValue[] extensions = KeyValue.EMPTY_ARRAY;
+  	
   public Route() {
     super();
   }
@@ -80,5 +80,22 @@ public class Route implements Cloneable {
     } catch (CloneNotSupportedException e) {
       throw new RuntimeException( e );
     }
+  }
+
+  public KeyValue[] getExtensions() {
+    return extensions;
+  }
+
+  public void setExtensions(KeyValue[] extensions) {
+    this.extensions = extensions;
+  }  
+  
+  public String getExtensionValue(String key) {
+    for(KeyValue kv: getExtensions()) {
+      if ( key.equals(kv.getKey())) {
+        return kv.getValue();
+      }
+    }
+    return null;    
   }
 }
