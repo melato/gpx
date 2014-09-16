@@ -143,5 +143,10 @@ public class GPXParserTest {
      Assert.assertEquals( "a1", gpx.getName());
      Assert.assertEquals( "a2", gpx.getDesc());
    }
+   public @Test void parseNaN() {
+     String nan = String.valueOf(Float.NaN);
+     float f = Float.parseFloat(nan);
+     Assert.assertTrue(Float.isNaN(f));
+   }
    
 }
