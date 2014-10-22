@@ -37,6 +37,7 @@ public class GPX {
 	public static final String DESC = "desc";
   public static final String SYM = "sym";
 	public static final String LINK = "link";
+    public static final String HREF = "href";
 	public static final String TYPE = "type";
   public static final String TEXT = "text";
 

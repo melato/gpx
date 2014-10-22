@@ -18,6 +18,7 @@
  */
 package org.melato.gpx;
 
+import java.io.Serializable;
 import java.util.Collections;
 import java.util.List;
 
@@ -34,7 +35,9 @@ public class Waypoint extends GpsPoint implements Cloneable {
   public String sym;
 	public List<Link> links = emptyLinks;
 
-	public static class Link {
+	public static class Link implements Serializable {
+	  private static final long serialVersionUID = 1L;
+	  public String href;
 	  public String type;
 	  public String text;
 	  

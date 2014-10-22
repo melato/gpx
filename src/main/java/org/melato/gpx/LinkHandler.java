@@ -30,6 +30,7 @@ class LinkHandler extends XMLMappingHandler {
 	Collection<Link> links;
 	XMLStringHandler typeHandler = new XMLStringHandler();
 	XMLStringHandler textHandler = new XMLStringHandler();
+	String href;
 	
 	public LinkHandler(Collection<Link> links) {
 		this.links = links;
@@ -39,15 +40,17 @@ class LinkHandler extends XMLMappingHandler {
 
 	@Override
 	public void start(XMLTag tag) throws SAXException {
-    typeHandler.clear();
-    textHandler.clear();
+	  href = tag.getAttribute(GPX.HREF);
+      typeHandler.clear();
+      textHandler.clear();
 	}
 
 	@Override
 	public void end() throws SAXException {
 	  Link link = new Link();
+	  link.href = href;
 	  link.type = typeHandler.getText();
-    link.text = textHandler.getText();
-    links.add(link);
+      link.text = textHandler.getText();
+      links.add(link);
 	}
 }
